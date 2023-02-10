@@ -1,0 +1,104 @@
+Keypoints
+	Default method in interface are not for meaningful implementations
+	The main advantage of default methods is 
+		without effecting implementation classes we can add new functionality to the interface (backward compatibility).
+		for backward compatibility so that old interfaces can be used to leverage the lambda expression capability????????????
+
+Default Methods/Defender methods/Virtual extension methods
+	Since 1.8 version onwards in addition to these,  we can declare 
+		default concrete methods inside interface, 
+		static method inside interface
+		Until 1.7 version inside interface we can take only:
+			public static final variables
+				Every variable declared inside interface is always public static final whether we are declaring or not. 
+			public abstract methods
+				Every method present inside interface is always public and abstract whether we are declaring or not. 
+
+		We can declare default method with the keyword “default” as follows 
+			default void m1(){   
+				System.out.println (“Default Method”);   
+			}   
+		Default method in interface are not for meaningful implementations. 
+		Interface default methods are by-default available to all implementation classes. 
+			Based on requirement implementation class can use these default methods directly or can override.
+			In the implementation class we can provide complete new implementation or we can call any interface method as follows. 
+		With default methods, there will not be any impact on the interface implementing classes. 
+		       default methods can be overridden if needed in the implementation. Also, it does not qualify as synchronized or final.
+	interfacename.super.m1(); 
+Ex:
+ interface Interf {    
+ 	default void m1() {            System.out.println("Default Method");                                }     
+  }     
+ class Test implements Interf {     
+       public static void main(String[] args) {     
+             	Test t = new Test();     
+       			t.m1();     
+        }
+  }
+
+How to override default method in the implementation class? 
+	 
+  
+  
+Advantage of default method in interface
+	The main advantage of default methods is without effecting implementation classes 
+		we can add new functionality to the interface (backward compatibility). 
+		default Stream stream() method is a default method added to the Collection interface in 1.8 version
+	We can’t override object class methods as default methods inside interface otherwise we get compile time error.
+		interface Interf {  default int hashCode() {   return 10;   }   }   //CTE
+		Reason: Object class methods are by-default available to every Java class 
+			hence it’s not required to bring through default methods.
+	Adding too many default methods to the interface is not a very good architectural decision. 
+		It is should be viewed as a compromise, only to be used when required, 
+			for upgrading existing interfaces without breaking backward compatibility.
+
+	
+Default method vs multiple inheritance  (diamond problem)
+	Two interfaces can contain default method with same signature then 
+		there may be a chance of ambiguity problem (diamond problem) to the implementation class. 
+	To overcome this problem compulsory we should override default method in the implementation class otherwise we get CTE. 
+		interface Left {   
+         default void m1() {   
+                System.out.println("Left Default Method");   
+          }   
+		}
+		interface Right {   
+          default void m1() {   
+                  System.out.println("Right Default Method");   
+           }   
+		 }  
+		//Duplicate default methods named m1 with the parameters () and () are inherited from the types Right and Left
+		public class Test implements Left, Right {}
+			// CTE,class Test inherits unrelated default for Left and Right
+		Solution: By overriding m1() method that is default method in Left and Right interfaces. 
+			public class Test implements Left, Right {
+				@Override
+				public void m1() {
+					System.out.println("My Own Implementation");
+					Left.super.m1();
+					Right.super.m1();
+				}
+			}
+
+Differences between interface with default methods and abstract class: 
+  Even though we can add concrete methods in the form of default methods to the interface, it won’t be equal to abstract class. 
+	Interface with default method != abstract class 
+	1) Inside interface every variable is always public static final and there is  no chance of instance variables 
+		Inside abstract class there may be a chance of instance variables which are required to the child class. 
+	2)Interface never talks about state of Object.  
+		Abstract class can talk about state of Object because it can contains instance variable. 
+	3) Inside interface we can’t declare Constructors.  
+		Inside abstract class we can declare Constructors. 
+	4)Inside interface we can’t declare Instance and static blocks. 
+		Inside abstract class we can declare Instance and static blocks. 
+	5)Functional interface with default  Methods can refer lambda expression. 
+		Abstract class can’t refer lambda Expressions. 
+	6)Inside interface we can’t override Object class methods.  
+		Inside abstract class we can override Object class methods. 
+ 
+
+
+
+
+
+ 

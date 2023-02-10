@@ -2,6 +2,7 @@ package _21javaVersions._8version;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -14,6 +15,7 @@ class Sample {
 		this.s = s;
 		System.out.println("Constructor Executed:" + s);
 	}
+	
 }
 
 interface Interf {
@@ -34,7 +36,27 @@ public class Demo {
 		// m6();
 		// m7();
 
-		m8();
+		//m8();
+		//m9();
+		
+		List<String> list = Arrays.asList("A","B","");
+		long count = list.stream().filter(String::isEmpty).count();
+		//System.out.println(count);
+		String s1="bbbbbb";
+		//String out=
+				Optional<Object> map = Optional.ofNullable(s1).map(a->{return null;});
+		System.out.println(map);
+		System.out.println(map);
+	}
+
+	private static String m11() {
+		// TODO Auto-generated method stub
+		return "aaaaaaaaa";
+	}
+
+	private static void m9() {
+
+		Optional.empty();
 	}
 
 	private static void m8() {
@@ -44,6 +66,7 @@ public class Demo {
 				(int) IntStream.range(0, a.size()).filter(i -> a.get(i) > b.get(i)).count(),
 				(int) IntStream.range(0, a.size()).filter(i -> a.get(i) < b.get(i)).count());
 		System.out.println(list);//[2, 1]
+		
 		
 		long[] arr={1,2,3};
 		long sum=Arrays.stream(arr).parallel().sum();

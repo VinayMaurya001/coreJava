@@ -6,31 +6,61 @@ Java 10 -March 2018
 Java 11 -September 2018
 Java 12- March 2019
 Java 13- September 2019
+Java 14- March 2020
+Java 15- September 2020	
+Java 16- March 2021
+Java 17- September 2021
+Java 18- March 2022
+Java 19- September 2022
+Java 20- March 2023
+Java 21- September 2023
 
 
-After Java 1.5version, Java 8 is the next major version.
 Before Java 8, sun people gave importance only for objects 
-but in 1.8version oracle people gave the importance for functional aspects of programming to bring its benefits to Java.
+but in 1.8 version oracle people gave the importance for functional aspects of programming to bring its benefits to Java.
 but it doesn’t mean Java is functional oriented programming language.
 
 Java 8 Features
- Introduction
+ Functional Interface
  Lambda Expressions
- Functional Interfaces
- 	Predicate
- 	Function
- 	Consumer
- 	Supplier
+ 
  Default methods in Interface
- Static Methods in Interfaces.
- Method Reference & Constructor Reference by Double Colon(::) Operator(in c++, scope resolution operator)
- Stream API
+ Static Methods in Interface
+ 
  Date & Time API ( Joda API)
- etc.
+ 
+ Method Reference & Constructor Reference by Double Colon(::) Operator(in c++, scope resolution operator)
+ 
+ Stream API
+ 	IntStream
+ 	CHnages in Random class
+ Predefind Functional Interfaces
+ 
+ Optional	
+ 	Wrapper class to check the null values and helps in further processing based on the value.
+ StringJoiner class
+ Concurrency API Enhancement
+ 
+ Nashorn,JavaScript Engine	
+ 	An improvised version of JavaScript Engine that enables JavaScript executions in Java, to replace Rhino.
+ PremGen: 
+ 	MetaData information of classes was stored in PremGen (Permanent-Generation) memory type before Java 8. PremGen is fixed in size and cannot be dynamically resized. It was a contiguous Java Heap Memory.
+ MetaSpace: 
+ 	Java 8 stores the MetaData of classes in native memory called 'MetaSpace'. It is not a contiguous Heap Memory and hence can be grown dynamically which helps to overcome the size constraints. This improves the garbage collection, auto-tuning, and de-allocation of metadata
 
 
+Define Nashorn in Java 8
+	Nashorn is a JavaScript processing engine that is bundled with Java 8. It provides better compliance with ECMA (European Computer Manufacturers Association) normalized JavaScript specifications and better performance at run-time than older versions.
+What is the use of JJS in Java 8?
+	As part of Java 8, JJS is a command-line tool that helps to execute the JavaScript code in the console. Below is the example of CLI commands:
+	JAVA>jjs
+	jjs> print("Hello, Java 8 - I am the new JJS!")
+	Hello, Java 8 - I am the new JJS!
+	jjs> quit()
+	>>
 
-Objective of java 8 version
+
+Objective of Java 8 version
 To simplify the programming
 	More readable
 	More Maintainable
@@ -41,6 +71,6 @@ To utilize functional programming benefits in java by using
 	Lambda Expression
 	Functional Interface
 To enable parallel programming
-	To utilize multi core processor
+	To utilize multi core processor using parallelStream()
 
 

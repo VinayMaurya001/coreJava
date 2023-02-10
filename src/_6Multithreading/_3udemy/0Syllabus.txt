@@ -77,4 +77,32 @@ what is MapReduce
 MapReduce and Fork-Join framework
 
 Thanks for joining my course, let's get started!
+
+
+
+
+
+
+
+
+
+https://stackoverflow.com/questions/11927248/java-thread-stops-with-no-exception
+https://stackify.com/java-remote-debugging/
+
+
+That's a bit tricky.
+
+A Java thread can terminate for two reasons:
+
+it can return from its run() method,
+it can terminate due to an exception being thrown and not caught on the thread's stack.
+You can detect the latter case by using an "UncaughtExceptionHandler" for the thread, but the former case can't be positively detected unless you modify your thread's run() method to log the event ... or something like that.
+
+I guess, the other way to figure out what is going on would be to attach a debugger to the JVM and get it to report the uncaught exception to you.
+
+(I suspect that the reason you are not seeing any exceptions is that your threads' run methods are not catching / logging all exceptions, AND they don't have an uncaught exception handler.)
+
+is there anyway to make the thread restart?
+
+No. There is no way to restart a Thread that has terminated.
 	

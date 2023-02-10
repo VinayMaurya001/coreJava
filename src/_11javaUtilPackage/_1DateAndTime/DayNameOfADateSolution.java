@@ -5,10 +5,23 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class DayNameOfADateSolution {
 	public static void main(String[] args) throws IOException {
+		//m1();
+		
+		
+		Date date=new Date(System.currentTimeMillis());
+		System.out.println(date.toString());
+		
+		    String strDate= new SimpleDateFormat("MMddyyyy").format(date);  
+		    System.out.println(strDate);  
+	}
+
+	private static void m1() throws IOException {
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
 

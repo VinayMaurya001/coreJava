@@ -1,0 +1,417 @@
+Functional interface
+	It has only one abstract method. It may or may not  have default/static  functions.
+	The @FunctionalInterface annotation is completely optional. 
+		The java compiler does not require it for our lambda types.
+		But it is good practice to add it. 
+	@FuntionalInterface
+	interface MyAddInterface{
+		int sumMethod(int a,int b);
+	}
+	
+Lambda Expression
+	Lambda Expression is just an anonymous(Nameless) Function or closures.
+	Lambda Expression doesn"t have
+		Name
+		Return type
+		Access modifier		
+	Lambda expression/function doesn't belong to any class.
+	Example:
+		@FuntionalInterface
+		interface MyAddInterface{
+			int sumMethod(int a,int b);
+		}
+		MyAddInterface  myAddInterface=(int a,int b)->a+b;
+		int result=myAddInterface.sumMethod(1,11);
+		System.out.println(result);
+	History Of Lambda
+		Lambda calculus is a big change in mathematical world which has been introduced in 1930.
+		LISP is the first programming which uses Lambda Expression.
+		The other languages which uses lambda expressions are:
+ 		C#.Net
+ 		C Objective
+ 		C
+ 		C++
+ 		Python
+		Ruby etc.
+		and finally in Java also.
+	Internal of Lambda 	
+		https://blogs.oracle.com/javamagazine/post/behind-the-scenes-how-do-lambda-expressions-really-work-in-java
+			lambdas are not inner classes
+			lambda body has been compiled into a private static method 
+			Reside in permanent memory of JVM (Method Area)
+			
+	Common ways to use the expression
+		Assignment to a functional Interface —> Predicate<String> stringPredicate = s -> s.isEmpty();
+		Casting it to a functional type —> (Predicate<String>) s -> s.isEmpty()
+		Can be passed as a parameter that has a functional type —> stream.filter(s -> s.isEmpty())
+		Returning it from a function —> return s -> s.isEmpty()
+
+Functional Interface And Lambda Expression
+	To invoke Lambda expressions's functionality, Functional Interface is required.
+	We can use Functional Interface reference to refer Lambda Expression.
+	Where ever Functional Interface concept is applicable there we can use Lambda Expressions.
+
+	Example:
+	interface MyAddInterface {
+		int sumMethod(int a,int b);
+	}
+	class Test{
+		public static void main(String[] args) {
+	
+			//Without Anonymous class or Lambda Expression 
+			class MyAddClass implements MyAddInterface {
+				public int sumMethod(int a,int b) {
+					System.out.println("method one execution");
+					return a+b;
+				}
+			}
+			MyAddInterface f = new MyAddClass();
+			f.sumMethod();
+		
+			//Using Anonymous class
+			MyAddInterface f2 = new MyAddInterface(){
+				public int sumMethod(int a,int b) {
+					System.out.println("method one execution");
+					return a+b;
+				}
+			};
+			f2.sumMethod();
+	
+			//With Lambda Expresion
+			MyAddInterface f3 = (int a,int b) ->{
+				System.out.println("method one execution");
+				return a+b;
+			};
+			f3.sumMethod();
+		}
+	}
+	
+
+
+
+
+
+
+How to write Lambda expression
+	1) A lambda expression can have zero or more number of parameters (arguments).
+	Ex:
+	() -> sop("hello");
+	(int a ) -> sop(a);
+	(int a, int b) -> {return a+b;};
+	(int a, int b) -> return a+b;//CTE
+
+	2) If zero number of parameters available then we have to use empty parameter [ like ()].
+	Ex: () -> sop("hello");
+		Optional parenthesis around parameter :
+			No need to declare a single parameter in parenthesis. For multiple parameters or zero parameters, parentheses are required
+		
+	3) Usually we can specify type of parameter. 
+	If the compiler expects the type based on the context then we can remove type. i.e., programmer is not required to specify type.
+	Ex:
+	(int a, int b) -> sop(a+b);
+	(a,b) -> sop(a+b);
+
+	4) If only one parameter is available and if the compiler can expect the type then we can remove the type and parenthesis also.
+		Ex:
+		(int a) -> sop(a);
+		(a)-> sop(a);
+		a -> sop(a);
+		
+		Type inference in Lambda
+		class TypeInferenceExample{
+			Interface StringLengthLambda{
+				int getLength(String s);
+			}
+			Psvm()
+			{
+				StringLengthLambda  myLambda= (String s)->s.length();
+				//If the type of the parameter can be decided by compiler automatically based on the context then we can remove types also.
+				StringLengthLambda  myLambda= (s)->s.length();
+				SOP(myLambda.getLength("Hello Lambda"));//12		
+				printLambda(s->s.length());
+			}
+			public static void printLambda(StringLengthLambda  i){
+				int length=i.getLength("Hello Lambda");
+				SOP(length);
+			}
+		}
+			7)
+		interface X1{ public int m1(Object s);}
+		X1 stringLengthFunction1=(String s)->s.length();//CTE,Lambda expression's parameter s is expected to be of type Object
+		interface X2{  public int (String s);}
+		X2 stringLengthFunction2=(String s)->s.length();
+	
+	5) Similar to method body lambda expression body also can contain multiple statements. 
+		If more than one statements present then we have to enclose inside within curly braces. 
+		Optional curly braces :
+			No need to use curly braces in expression if the body contains a single statement
+		Optional return keyword :
+			The compiler automatically returns the value if the body has a single expression to return the value. 
+			Curly braces are required to indicate that expression returns a value
+		But if one statement is return statement the either we use curly braces or just not write return keyword.
+			(String str) -> {return str;};
+			(str) -> return str;//CTE
+			(str) ->  str;//No CTE
+	
+	6)Lambda function/expression and funtional interface
+		Once we write lambda expression we can call that expression just like a method, 
+		but for this functional interfaces are required.
+		To call lambda expression some type is required. That is provided by functional interface.
+		For backward compatibility there is not created a new type for Lambda.
+		They use interface type for a lambda expression.
+
+	7)
+	  a)From lambda expression, we can access enclosing class/instance variable and enclosing method variable directly.
+		Local variable  referenced from lambda expression must be  final or effectively final.
+		and hence we cann't perform re-assignment for those local variables otherwise we get compile time error.
+		interface Interf {
+			public void m1();
+		}
+		class Test {
+			int x = 10;
+			public void m2() {
+				int y = 20;
+ 				Interf i = () -> {
+ 					int z=30;
+ 					System.out.println(x); 10
+ 					System.out.println(y); 20
+ 					x = 888;//NO CTE
+ 					//y = 999; //CTE
+ 					z=z+1;//NO CTE
+		 		};
+ 				i.m1();
+ 				y = 777;//CTE
+			}
+ 			public static void main(String[] args) {
+ 				Test t = new Test();
+ 				t.m2(); 
+			}
+		}
+		
+		According to the “effectively final” concept, a compiler treats every variable as final, as long as it is assigned only once.
+	    It is safe to use such variables inside lambdas because the compiler will control their state and 
+		    trigger a compile-time error immediately after any attempt to change them.
+	For example, the following code will not compile:
+		public void method() {
+		    String localVariable = "Local";
+		    Foo foo = parameter -> {
+		        String localVariable = parameter;//CTE
+		        return localVariable;
+		    };}
+		The compiler will inform you that:
+			Variable 'localVariable' is already defined in the scope.
+	This approach should simplify the process of making lambda execution thread-safe.
+ b)Protect Object Variables from Mutation
+	One of the main purposes of lambdas is use in parallel computing – 
+		which means that they're really helpful when it comes to thread-safety.
+	The “effectively final” paradigm helps a lot here, but not in every case. 
+	Lambdas can't change a value of an object from enclosing scope. 
+	But in the case of mutable object variables, a state could be changed inside lambda expressions.
+		int[] total = new int[1];
+		Runnable r = () -> total[0]++;
+		r.run();
+		This code is legal, as total variable remains “effectively final”. 
+		But will the object it references to have the same state after execution of the lambda? No!
+	Keep this example as a reminder to avoid code that can cause unexpected mutations.
+		
+		
+	8)The this reference in Lambda Expression
+	Inside anonymous inner class "this" always refers current anonymous Inner class object but not outer class Object.
+	Within lambda expression "this" keyword represents current outer class object reference 
+		(that is current enclosing class reference in which we declare lambda expression)
+	interface Interf {
+		public void m1();
+	}
+	class Test {
+		int x = 777;
+		public void m2() {
+			Interf i = ()-> {
+ 				int x = 888;
+ 				System.out.println(x); 888
+ 				System.out.println(this.x); 777
+ 			};
+ 			i.m1();
+ 		}
+	}
+	
+	
+	
+	interface Process {
+		void process(int i);
+	}
+	public class ReferenceExample {
+	 public void doProcess(int i, Process p) {
+		p.process(i);
+	 }
+	 public void execute() {
+		doProcess(10, i -> {
+			System.out.print(i);
+			System.out.println(this);// NO CTE
+		});
+	 }
+	 public static void main(String[] args) {
+		ReferenceExample referenceExample = new ReferenceExample();
+		referenceExample.doProcess(10, new Process() {
+			@Override
+			public void process(int i) {
+				System.out.print(i);
+				System.out.println(this);// override this with annonymous object
+			}
+			@Override
+			public String toString() {
+				return "Anonymous []";
+			}
+		});
+		referenceExample.doProcess(10, i -> {
+			System.out.println(i);
+			// System.out.println(this);//CTE
+		});
+		referenceExample.execute();
+	 }
+	 @Override
+	 public String toString() {
+		return "ReferenceExample []";
+	 }
+	}
+	
+		
+		
+Advantages of Lambda expression?
+	It Enable functional programming in Java (main benefits)
+		We can handle procedure/function just like values.
+		Enable to treat functionality as a method argument, or code as data & We can pass  procedure/function as arguments.
+		A lambda expression can be passed around as if it was an object and executed on demand.
+		A function that can be created without belonging to any class.
+		More Readable & Maintainable at some situations
+	We can reduce length of the code 
+		so that readability & maintainability of the code will be improved.
+	We can resolve complexity of anonymous inner classes until some extent..
+		
+		
+		
+Problems  in OOPs
+  1)
+	We cann't have piece of logic/function in isolation without class.
+		Everything is an object
+		All code blocks are associated with classes &  objects
+	
+	Inline String & number  values
+		String name="foo";
+		Double pi=3.14;
+
+	What if Functions as Values ?
+		aBlockOfCode=void show(){
+			SOP("Hello World");
+		}
+		
+		greetingFunction=()->SOP("Hello World");
+		greet(greetingFunction);
+		greet(() ->SOP("Hello World"));
+
+		doubleNumberFunction=(int a)->{return a*2};
+  2)Passing behavior in OOPs
+	What if I want just pass a function?
+	We are passing a thing/object that has behavior/action/function.
+		public void greet(object){
+			object.action();
+		}
+
+	interface Greeting {
+		void perform();
+	}
+	class HelloWorldGreeting implements Greeting {
+		public void perform() {
+			System.out.println("HeeloWorldGreeting");
+		}
+	}
+	public class Greeter  {
+		public void greet(Greeting greeting) {
+			greeting.perform();
+		}
+		public static void main(String[] args) {
+			Greeter greeter=new Greeter();
+	
+			Greeting heloWorldGreeting=new HeloWorldGreeting();
+			heloWorldGreeting.perform();//Hello World
+			greeter.greet(heloWorldGreeting);//Hello World
+	
+			Greeting innerClassGreeting=new Greeting(){public void perform(){	SOP("Hello World");}};
+			innerClassGreeting.perform();//Hello World
+			greeter.greet(innerClassGreeting);();//Hello World
+
+			Greeting myLambdaFunction=()->{System.out.println("HeeloWorldLambdaExpression");};
+			myLambdaFunction.perform();//This is how we execute lambda expression. 
+							  //By calling the interface method on it, just as if it were an instance of a class.
+			greeter.greet(myLambdaFunction);
+	
+			greeter.greet(()->{System.out.println("HeeloWorldLambdaExpression");});
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+How/When to use Lambda?	
+1)Keep Lambda Expressions Short and Self-explanatory
+If possible, use one line constructions instead of a large block of code. 
+	Remember lambdas should be an expression, not a narrative. 
+	Despite its concise syntax, lambdas should precisely express the functionality they provide.
+	This is mainly stylistic advice, as performance will not change drastically. 
+		In general, however, it is much easier to understand and to work with such code.
+This can be achieved in many ways:
+a)Avoid Blocks of Code in Lambda's Body
+	Foo foo = parameter -> buildString(parameter);
+b)Avoid Specifying Parameter Types
+	(a, b) -> a.toLowerCase() + b.toLowerCase();
+c)Avoid Parentheses Around a Single Parameter
+	Lambda syntax requires parentheses only around more than one parameter or when there is no parameter at all. 
+	a -> a.toLowerCase();
+d)Avoid Return Statement and Braces
+	a -> a.toLowerCase();
+e)Use Method References
+	Very often, even in our previous examples, lambda expressions just call methods which are already implemented elsewhere. 
+	In this situation, it is very useful to use another Java 8 feature: method references.
+	So, the lambda expression:
+		a -> a.toLowerCase();
+		could be substituted by:
+		String::toLowerCase;
+		This is not always shorter, but it makes the code more readable.
+	MethodReference is simplified version of Lambda.????????
+2)Use “Effectively Final” Variables
+	Accessing a non-final variable inside lambda expressions will cause the compile-time error. 
+		But it doesn’t mean that you should mark every target variable as final.
+	This approach should simplify the process of making lambda execution thread-safe.
+3)Lambda with Existing Libraries
+	The lambda expression approach can be used for any suitable interface from old libraries. 
+	It is usable for interfaces like Runnable, Comparator, and so on. 
+	However, this doesn't mean that you should review your whole older codebase and change everything.
+	Runnable Using Lambdas	
+		Runnable is a functional interface.
+		Thread myLambdaThread=new Thread(()->{System.out.println("myLambdaThread");});
+		myLambdaThread.run();
+		myLambdaThread.start();
+	
+	
+	
+	
+LambdaExercise.java
+	// Step 1: Sort list by last name
+	// Step 2: Create a method that prints all elements in the list
+	// Step 3: Create a method that prints all people that have last name beginning with C
+
+
+		
+
+	
+Type Inference?
+Type inference helps the compiler determine the argument types by looking at each method invocation and corresponding declaration.
+
+		
+		
+	

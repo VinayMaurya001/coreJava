@@ -20,7 +20,7 @@ public class ThreadPoolDemo {
 				new MyCallable(40),
 				new MyCallable(50), 
 				new MyCallable(60) 
-		};
+		};.
 		ExecutorService service = Executors.newFixedThreadPool(3);// 2,3,4,5,6,7
 		for (MyCallable job : jobs) {
 			Future f = service.submit(job);

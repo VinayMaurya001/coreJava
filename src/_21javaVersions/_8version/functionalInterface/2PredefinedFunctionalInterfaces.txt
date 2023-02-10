@@ -1,0 +1,105 @@
+
+Predefined Functional Interfaces ( import Java.util.function.*;   )
+
+Function<T, R>
+	UnaryOperator<T>
+		If input and output are same type 
+Predicate<T>
+Consumer<T> 
+Supplier<T>
+
+
+BiFunction<T, U, R> 
+	BinaryOperator<T>
+BiPredicate<T, U> 
+BiConsumer<T, U>
+//No BiSupplier
+
+IntUnaryOperator
+IntBinaryOperator
+
+Operator functional interface: Perform a reduction type operation that accepts the same input types.
+
+
+
+Primitive Type Predicate Interfaces: 
+	IntPredicate
+		always accepts input value of int type 
+	LongPredicate
+	DoublePredicate
+	
+Primitive Type Functional Interfaces for Function: 
+	IntFunction: 
+		can take only int type as input and return any type     
+		public R apply(int i); 
+	LongFunction: 
+	DoubleFunction: 
+
+	ToIntFunction: 
+		It can take any type as input but always returns int type     
+		public int applyAsInt(T t) 
+	ToLongFunction: 
+	ToDoubleFunction: 
+
+	IntToLongFunction: 
+		It can take int type as input and returns long type          
+		public long applyAsLong(int i
+	IntToDoubleFunction: 
+	LongToIntFunction: 
+	LongToDoubleFunction: 
+	DoubleToIntFunction: 
+	DoubleToLongFunction: 
+	
+	ToIntBiFunction:
+		return type must be int type but inputs can be anytype    
+		public int applyAsInt(T t, U u) 
+	ToLongBiFunction:
+	ToDoubleBiFunction: 
+
+
+Primitive Version for Consumer: 
+The following 6 primitive versions available for Consumer: 
+	IntConsumer     
+		public void accept(int value) 
+	LongConsumer     
+	DoubleConsumer     
+
+	ObjIntConsumer<T>     
+		public void accept(T t,int value) 
+	ObjLongConsumer<T>     
+	ObjDoubleConsumer<T>     
+
+Primitive Versions for Supplier: 
+The following 4 primitive versions available for Supplier: 
+	IntSupplier     
+		public int getAsInt(); 
+	LongSupplier     
+	DoubleSupplier     
+	BooleanSupplier     
+
+Primitive versions for UnaryOperator: 
+	IntUnaryOperator:     
+		public int applyAsInt(int) 
+	LongUnaryOperator:     
+	DoubleUnaryOperator:     
+
+The primitive versions for BinaryOperator: 
+	IntBinaryOperator     
+		public int applyAsInt(int i,int j) 
+	LongBinaryOperator     
+	DoubleBinaryOperator     
+	
+	
+http://tutorials.jenkov.com/java-functional-programming/functional-interfaces.html
+
+	Primitive Functional
+	
+	FP03FunctionalInterfaces.java
+	FP03FunctionalInterfaces2.java
+	
+	Comparator
+  Comparator<Course> comparingByNoOfStudentsIncreasing 
+					= Comparator.comparingInt(Course::getNoOfStudents);
+
+
+Behaviour Parameterization with FP

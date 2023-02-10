@@ -47,3 +47,7 @@ Example:MapInterfaceDemo.java
 How to get synchronized version of HashMap object?
 	HashMap   hashMap = new HashMap();
 	Map sunchronizedHashMap=Collections.getSynchronizedMap(hashMap);
+
+	
+	new HashMap().forEach(biconsumer);;
+	

@@ -1,12 +1,11 @@
 Parameter type/type parameter/type variables vs type argument
 Multiple Parameter Type
-
 UnBounded Types
 Bounded Types using extends
 
 Multiple Parameter Type
 Based on our requirement we can declare any number of type parameters 
-	& all these type parameter should be separated with ,.
+	& all these type parameter should be separated with ,
 	Class A<A,B,C> {}
 	
 UnBounded Types

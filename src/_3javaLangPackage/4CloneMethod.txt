@@ -15,12 +15,103 @@ Purpose of cloning
 2)To preserve state of an object
 	 (suppose we want to compare our object later with updated object)
 
-We can perform  shallow cloning by clone() method of Object class.
 
 clone() method
-protected  native Object clone() throws CloneNotSupportedException
+	protected  native Object clone() throws CloneNotSupportedException
+	If you want to use Java Object clone() method, you have to implement the java.lang.Cloneable marker interface. 
+	Otherwise, it will throw CloneNotSupportedException at runtime. 
+	Also Object clone is a protected method, so you will have to override it. 
+	We are good with java object default cloning as long as we have only primitive and immutable variables in the object.
+	We can perform  shallow cloning by clone() method of Object class.
+
+
+Object Cloning Types
+1. Shallow Cloning
+		 @Override
+		 public Object clone() throws CloneNotSupportedException {
+			 Employee e = new Employee();
+			 e.setId(this.id);
+			 e.setName(this.name);
+			 e.setMap(this.map);
+			 return e;
+		}
+2. Deep Cloning
+	The clone() method should return a new object totally detached from the original instance. 
+	So if you are thinking to use Object clone and cloning in your program, do it wisely and override it properly by taking care of mutable fields.
+	It could be a daunting task if your class extends other class that in turn extends other class and so on. 
+	You will have to go all the way in the Object inheritance hierarchy to take care of the deep copy of all the mutable fields.
+
+		public Object clone() throws CloneNotSupportedException {
+		
+			Object obj = super.clone(); //utilize clone Object method
+		
+			Employee emp = (Employee) obj;
+		
+			// deep cloning for immutable fields
+			emp.setProps(null);
+			Map<String, String> hm = new HashMap<>();
+			String key;
+			Iterator<String> it = this.props.keySet().iterator();
+			// Deep Copy of field by field
+			while (it.hasNext()) {
+				key = it.next();
+				hm.put(key, this.props.get(key));
+			}
+			emp.setProps(hm);
+			
+			return emp;
+		}
+
+
+Cloning using Serialization?
+		One way to easily perform deep cloning is through serialization. 
+		But serialization is an expensive procedure and your class should implement Serializable interface. 
+		All the fields and superclasses must implement Serializable too.
+
+		Using Apache Commons Util
+			If you are already using Apache Commons Util classes in your project and your class is serializable, then use the below method.
+			Employee clonedEmp = org.apache.commons.lang3.SerializationUtils.clone(emp);
+
+		Copy Constructor for Cloning
+			We can define a copy constructor to create a copy of the object. 
+			Why to depend on the Object clone() method at all? 
+			For example, we can have an Employee copy constructor like the following code.
+				public Employee(Employee emp) {
+					this.setId(emp.getId());
+					this.setName(emp.getName());
+					
+					Map<String, String> hm = new HashMap<>();
+					String key;
+					Iterator<String> it = emp.getProps().keySet().iterator();
+					// Deep Copy of field by field
+					while (it.hasNext()) {
+						key = it.next();
+						hm.put(key, emp.getProps().get(key));
+					}
+					this.setProps(hm);
+				
+				}
+			Whenever we need a copy of employee object, we can get it using Employee clonedEmp = new Employee(emp);. 
+			However writing copy constructor can be a tedious job if your class has a lot of variables, especially primitive and immutable.
+
+
+Java Object Cloning Best Practices
+	Use default Object clone() method only when your class has primitives and immutable variables or you want shallow copy. 
+		In case of inheritance, you will have to check all the classes you are extending till the Object level.
+	You can also define copy constructor if your class has mostly mutable properties.
+	Utilize Object clone() method by calling super.clone() in overridden clone method, 
+		then make necessary changes for deep copying of mutable fields.
+	If your class is serializable, you can use serialization for cloning. 
+		However, it will come with a performance hit, so do some benchmarking before using serialization for cloning.
+	If you are extending a class and it has defined clone method properly using deep copy, 
+		then you can utilize default clone method. For example, we have properly defined clone() method in Employee class as follows.
+
+
+
+
 
 Creating duplicate reference variable is not cloning.
+
 Test t2=t1;
 
 class  Test implements Cloneable
@@ -163,3 +254,19 @@ If object contains only primitive variables then shallow cloning is the best cho
 If object contains reference variables then deep cloning is the best choice.
 
 Normally shallow cloning we perform.
+
+
+
+
+Immutable class
+https://www.journaldev.com/129/how-to-create-immutable-class-in-java
+https://www.journaldev.com/1425/builder-design-pattern-in-java
+https://www.journaldev.com/1432/java-immutable-class-builder
+https://www.journaldev.com/802/string-immutable-final-java
+
+
+Cloning
+https://www.journaldev.com/60/java-clone-object-cloning-java
+https://www.journaldev.com/21078/copy-constructor-in-java
+https://www.journaldev.com/17129/java-deep-copy-object
+https://www.journaldev.com/753/java-copy-array-array-copy-java

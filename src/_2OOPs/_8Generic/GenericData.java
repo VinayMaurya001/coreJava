@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 public class GenericData {
 	public static void main(String[] args) {
-		// m1();
-		// m2();
-		// m3();
-		//m4();
+		 m1();
+		 m2();
+		 m3();
+		m4();
 		ArrayList<Number> box = new ArrayList<Number>();
 		box.add(new Integer(10));   // OK
 		box.add(new Double(10.1));  // OK
-	System.out.println(box);
+		System.out.println(box);
 	}
 
 	private static void m1() {
@@ -20,7 +20,7 @@ public class GenericData {
 		Data data2 = new Data(10);
 		int intData2 = (int) data2.getData();
 		System.out.println(intData2);
-		int intData4 = (int) data.getData();// RTE,ClassCastException
+		//int intData4 = (int) data.getData();// RTE,ClassCastException
 	}
 
 	private static void m2() {
@@ -29,7 +29,7 @@ public class GenericData {
 		Data2 data2 = new Data2(10);
 		int intData2 = (int) data2.getData();
 		System.out.println(intData2);
-		int intData4 = (int) data.getData();// RTE,ClassCastException
+		//int intData3 = (int) data.getData();// RTE,ClassCastException
 	}
 
 	private static void m3() {
@@ -38,12 +38,13 @@ public class GenericData {
 		Data2 data2 = new Data2<>(10);
 		int intData2 = (int) data2.getData();
 		System.out.println(intData2);
-		int intData4 = (int) data.getData();// RTE,ClassCastException
+//		int intData4 = (int) data.getData();// RTE,ClassCastException
 	}
 
 	private static void m4() {
 		Data2<String> data = new Data2<String>("hello generic");
 		String stringData = (String) data.getData();
+		String stringData2 =  data.getData();
 		Data2<Integer> data2 = new Data2<>(10);
 		int intData2 = (int) data2.getData();
 		System.out.println(intData2);

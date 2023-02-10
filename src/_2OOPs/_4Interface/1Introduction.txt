@@ -93,3 +93,11 @@ CTE, because we have to take extends first followed by interface.
 
 To reduce the complexity and simplify the language, multiple inheritance is not supported in java.
 	Diamond Problem
+
+	
+https://blogs.oracle.com/javamagazine/post/the-evolving-nature-of-java-interfaces
+As usual, the Java designers devised the following sensible and practical rules to deal with these problems:
+Inheriting multiple abstract methods with the same name is not a problem—they are viewed as the same method.
+Diamond inheritance of fields—one of the difficult problems—is avoided, because interfaces are not allowed to contain fields that are not constants.
+Inheriting static methods and constants (which are also static by definition) is not a problem, because they are prefixed by the interface name when they are used, so their names do not clash.
+Inheriting from different interfaces multiple default methods with the same signature and different implementations is a problem. But here Java chooses a much more pragmatic solution than some other languages: instead of defining a new language construct to deal with this, the compiler just reports an error. In other words, it’s your problem. Java just tells you, “Don’t do this.”

@@ -1,9 +1,9 @@
 Introduction
-Lambda Expressions
+Lambda Expression
 	Introduction
 		Anonymous inner classes vs Lambda Expressions
 	Lambda Expressions with Collections.sort() 
-Functional Interfaces(old to new)
+Functional Interface
 	Introduction
 	Functional Interface And Lambda Expression
 	Predefined Functional Interfaces
@@ -14,7 +14,13 @@ Functional Interfaces(old to new)
 Default & static methods in Interface
 Method Reference & Constructor Reference by Double Colon(::) Operator.
 Stream API
+
 Date & Time API (Joda API), joda.org
+Optional class
+StringJoiner class
+Concurrency API Enhancement
+Nashorn,JavaScript Engine	
+
 Collections improvements
 
 

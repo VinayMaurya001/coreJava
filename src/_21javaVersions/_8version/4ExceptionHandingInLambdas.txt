@@ -1,0 +1,160 @@
+
+Exception Handling in Lambdas
+Kaushik Lambda Basic 18: generic lambda wrapper
+public class ExceptionHandlingExample1 {
+	public static void main(String[] args) {
+		int[] someNumbers = { 1, 2, 3, 4, 5 };
+		int key = 2;
+		process(someNumbers, key);
+	}
+	private static void process(int[] someNumbers, int key) {
+		for (int i : someNumbers) {
+			System.out.println(i + key);
+		}
+	}
+}
+
+
+public class ExceptionHandlingExample2 {
+public static void main(String[] args) {
+	int[] someNumbers = { 1, 2, 3, 4, 5 };
+	int key = 2;
+	process(someNumbers, key, (v, k) -> System.out.println(v + k));
+	process(someNumbers, key, (v, k) -> System.out.println(v - k));
+	process(someNumbers, key, (v, k) -> System.out.println(v / k));
+}
+private static void process(int[] someNumbers, int key, BiConsumer<Integer, Integer> consumer) {
+	for (int i : someNumbers) {
+		consumer.accept(i, key);
+	}
+}
+}
+
+
+public class ExceptionHandlingExample3 {
+public static void main(String[] args) {
+	int[] someNumbers = { 1, 2, 3, 4, 5 };
+	int key = 2;
+	process(someNumbers, key, (v, k) -> System.out.println(v / k));
+}
+private static void process(int[] someNumbers, int key, BiConsumer<Integer, Integer> consumer) {
+	for (int i : someNumbers) {
+		try
+		{
+			consumer.accept(i, key);
+		}
+		catch(ArithmeticException e)
+		{
+			System.out.println(e);
+		}
+	}
+}
+}
+
+
+public class ExceptionHandlingExample4 {
+public static void main(String[] args) {
+	int[] someNumbers = { 1, 2, 3, 4, 5 };
+	int key = 0;
+	process(someNumbers, key, (v, k) -> {
+		try {
+			System.out.println(v / k);
+		} catch (ArithmeticException e) {
+			System.out.println(e);
+		}
+	});
+}
+private static void process(int[] someNumbers, int key, BiConsumer<Integer, Integer> consumer) {
+	for (int i : someNumbers) {
+		consumer.accept(i, key);
+	}
+}
+}
+
+
+public class ExceptionHandlingExample5 {
+public static void main(String[] args) {
+	int[] someNumbers = { 1, 2, 3, 4, 5 };
+	int key = 0;
+	process(someNumbers, key, wrapperLambda((v, k) -> {
+		System.out.println(v / k);
+	}));
+}
+private static BiConsumer<Integer, Integer> wrapperLambda(BiConsumer<Integer, Integer> consumer) {
+	return consumer;
+}
+private static void process(int[] someNumbers, int key, BiConsumer<Integer, Integer> consumer) {
+	for (int i : someNumbers) {
+		consumer.accept(i, key);
+	}
+}
+}
+
+
+public class ExceptionHandlingExample6 {
+public static void main(String[] args) {
+	int[] someNumbers = { 1, 2, 3, 4, 5 };
+	int key = 0;
+	process(someNumbers, key, wrapperLambda((v, k) -> {
+		System.out.println(v / k);
+	}));
+}
+private static BiConsumer<Integer, Integer> wrapperLambda(BiConsumer<Integer, Integer> consumer) {
+	return (v, k) -> System.out.println(v + k);
+}
+private static void process(int[] someNumbers, int key, BiConsumer<Integer, Integer> consumer) {
+	for (int i : someNumbers) {
+		consumer.accept(i, key);
+	}
+}
+}
+
+public class ExceptionHandlingExample7 {
+public static void main(String[] args) {
+	int[] someNumbers = { 1, 2, 3, 4, 5 };
+	int key = 0;
+	process(someNumbers, key, wrapperLambda((v, k) -> {
+		System.out.println(v / k);
+	}));
+}
+//true lambda wrapper
+private static BiConsumer<Integer, Integer> wrapperLambda(BiConsumer<Integer, Integer> consumer) {
+	return (v, k) -> 
+{
+//System.out.println("Executing from wrapper");
+consumer.accept(v, k);
+};
+}
+private static void process(int[] someNumbers, int key, BiConsumer<Integer, Integer> consumer) {
+	for (int i : someNumbers) {
+		consumer.accept(i, key);
+	}
+}
+}
+
+ExceptionHandlingExample8.java
+public class ExceptionHandlingExample8 {
+public static void main(String[] args) {
+	int[] someNumbers = { 1, 2, 3, 4, 5 };
+	int key = 0;
+	process(someNumbers, key, wrapperLambda((v, k) -> {
+		System.out.println(v / k);
+	}));
+}
+private static BiConsumer<Integer, Integer> wrapperLambda(BiConsumer<Integer, Integer> consumer) {
+	return (v, k) -> {
+		try {
+			consumer.accept(v, k);
+		} catch (ArithmeticException e) {
+			System.out.println("Inside Wrapper Lambda");
+		}
+	};
+}
+private static void process(int[] someNumbers, int key, BiConsumer<Integer, Integer> consumer) {
+	for (int i : someNumbers) {
+		consumer.accept(i, key);
+	}
+}
+}
+
+

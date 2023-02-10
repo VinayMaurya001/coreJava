@@ -1,0 +1,84 @@
+Stream Creation
+There are many ways to create a stream instance of different sources. 
+1)	Empty Stream
+	    Stream<String> streamEmpty = Stream.empty();
+			public Stream<String> m1(List<String> list) {
+    			return list == null || list.isEmpty() ? Stream.empty() : list.stream();}
+
+2)	Stream of Collection
+		Stream can also be created of any type of Collection (Collection, List, Set, not map):
+		Collection<String> collection = Arrays.asList("a", "b", "c");
+		//List.of() is introduced in Java 9.   static <E> List<E> of(E... elements)
+		//In Java 8, Arrays.asList() is a good alternative. public static <T> List<T> asList(T... a)
+		Stream<String> streamOfCollection = collection.stream();
+		Stream<String> streamOfCollection = collection.parallelStream();
+		A stream() & parallelStream() default method is added to the Collection interface
+2) Stream of value/values/array
+	public static<T> Stream<T> of(T t) {}
+	public static<T> Stream<T> ofNullable(T t) {}
+	public static<T> Stream<T> of(T... values) {   return Arrays.stream(values);}
+
+	Stream<String> streamOfArray = Stream.of("a", "b", "c");
+	public static<T> Stream<T> of(T... values) {
+        return Arrays.stream(values);
+    }
+    We can also apply a stream for group of values and for arrays. 
+	Ex: Stream s=Stream.of(99,999,9999,99999); 
+	Double[] d={10.0,10.1,10.2,10.3}; 
+	Stream s1=Stream.of(d); 
+3)	Stream of Array
+		They can be created out of an existing array or of a part of an array:	
+		String[] arr = new String[]{"a", "b", "c"};
+		Stream<String> streamOfArrayFull = Arrays.stream(arr);
+		Stream<String> streamOfArrayPart = Arrays.stream(arr, 1, 3);
+		//Arrays.stream():Primitive/Reference Pipeline both
+4)	Stream.builder()
+	When builder is used the desired type should be additionally specified in the right part of the statement, 
+		otherwise the build() method will create an instance of the Stream<Object>:
+	Stream<String> streamBuilder = Stream.<String>builder().add("a").add("b").add("c").build();
+5)Stream.generate()
+	IntStream.generate()
+	The generate() method accepts a Supplier<T> for element generation. 
+		As the resulting stream is infinite, developer should specify the desired size or 
+		the generate() method will work until it reaches the memory limit:
+	Stream<String> streamGenerated =Stream.generate(() -> "element").limit(10);
+	System.out.println(streamGenerated.collect(Collectors.toList()));
+	The code above creates a sequence of ten strings with the value – “element”.
+6)Stream.iterate()
+  IntStream.iterate()
+	Stream<Integer> streamIterated = Stream.iterate(40, n -> n + 2).limit(20);
+	The first element of the resulting stream is a first parameter of the iterate() method. 
+	For creating every following element the specified function is applied to the previous element. 
+	In the example above the second element will be 42.
+7)Stream of Primitives
+	IntStream.range()
+	IntStream.rangeClosed()
+	Java 8 offers a possibility to create streams out of three primitive types: int, long and double. 
+	As Stream<T> is a generic interface and there is no way to use primitives as a type parameter with generics, 
+		three new special interfaces were created: IntStream, LongStream, DoubleStream.
+	Using the new interfaces alleviates unnecessary auto-boxing allows increased productivity:
+		IntStream intStream = IntStream.range(1, 3);
+		LongStream longStream = LongStream.rangeClosed(1, 3);
+	The range(int startInclusive, int endExclusive) method creates an ordered stream from the first parameter to the second parameter. 
+	It increments the value of subsequent elements with the step equal to 1. 
+	These two methods can be used to generate any of the three types of streams of primitives.
+	
+	Since Java 8 the Random class provides a wide range of methods for generation streams of primitives. 
+	For example, the following code creates a DoubleStream, which has three elements:
+		Random random = new Random();
+		DoubleStream doubleStream = random.doubles(3);
+8)Stream of String
+	String can also be used as a source for creating a stream.
+	With the help of the chars() method of the String class. 
+	Since there is no interface CharStream in JDK, the IntStream is used to represent a stream of chars instead.
+		IntStream streamOfChars = "abc".chars();
+	The following example breaks a String into sub-strings according to specified RegEx:
+		Stream<String> streamOfString = Pattern.compile(", ").splitAsStream("a, b, c");	
+9)Stream of File
+	Java NIO class Files allows to generate a Stream<String> of a text file through the lines() method. 
+	Every line of the text becomes an element of the stream:
+		Path path = Paths.get("C:\\file.txt");
+		Stream<String> streamOfStrings = Files.lines(path);
+		Stream<String> streamWithCharset = Files.lines(path, Charset.forName("UTF-8"));
+	
+10) Calling any intermediatary operation on stream

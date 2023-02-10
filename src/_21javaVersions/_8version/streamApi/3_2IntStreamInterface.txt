@@ -1,0 +1,6 @@
+
+
+static IntStream	range(int startInclusive, int endExclusive)
+	Returns a sequential ordered IntStream from startInclusive (inclusive) to endExclusive (exclusive) by an incremental step of 1.
+static IntStream	rangeClosed(int startInclusive, int endInclusive)
+	Returns a sequential ordered IntStream from startInclusive (inclusive) to endInclusive (inclusive) by an incremental step of 1.

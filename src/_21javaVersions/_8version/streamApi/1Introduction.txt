@@ -1,0 +1,250 @@
+Streams API (Since 1.8v)
+	It contains classes for processing sequences of elements.
+	To process objects of the collection or arrays.
+	The central API interface is the Stream<T> present in java.util.stream. 
+	It provides handy functions to work with data source(collection, arrays , IO channel, File etc)
+What is the differences between Java.util.streams and Java.io streams? 
+	java.util streams meant for processing objects from the collection. 
+		i.e, it represents a stream of objects from the collection 
+	but Java.io streams meant for processing binary 
+		and character data with respect to file.  i.e it represents stream of binary data or character data from the file.
+		hence  Java.io streams and Java.util streams both are different. 
+
+What is the difference between collection and stream?   
+	If we want to represent a group of individual objects as a single entity then We should go for collection. 
+		If we want to process a group of objects from the collection then we should go for streams. 
+	We can create a stream object to the collection by using stream() method of Collection interface.
+		stream() method is a default method added to the Collection in 1.8 version. 
+		default Stream stream()   
+
+
+https://javahungry.blogspot.com/2022/06/stream-interview-questions-and-answers.html
+
+
+Stream
+	Flow of data /Sequence of data elements
+
+Stream pipeline flow
+	Source of stream
+		Create/Convert source data into a Java8 stream
+	Multiple Intermediate Opetations
+	Single Terminal Operation
+
+what are the properties/features/characteristics of java 8 stream?
+	Stream doesn’t store data, it operates on the source data structure 
+		Operations performed on a stream does not modify it's source
+	Elements of a stream are only visited once during the life of a stream
+		On a stream, we can not apply operation twice
+		Stream<Integer> stream = myList.stream();
+		Stream<Integer> stream2 = stream.filter(n->n>8);
+		Stream<Integer> stream3 = stream.filter(n->n>10);//RTE,java.lang.IllegalStateException: stream has already been operated upon or closed
+	Non terminal / Intermediate operations generates another stream
+	Stream operations use functional interfaces, easy to use Lambda exp
+	Stream support sequential as well as parallel processing
+
+
+Referencing a Stream
+Once created, the stream instance will not modify its source, 
+	therefore allowing the creation of multiple stream instances from a single source.
+It is possible to instantiate a stream and to have an accessible reference to it as long as 
+	only intermediate operations were called. 
+	Executing a terminal operation makes a stream inaccessible.
+	To demonstrate this we will forget for a while that the best practice is to chain sequence of operation. 
+		Besides its unnecessary verbosity, technically the following code is valid:
+			Stream<String> stream = Stream.of("a", "b", "c").filter(element -> element.contains("b"));
+			Optional<String> anyElement = stream.findAny();
+		But an attempt to reuse the same reference after calling the terminal operation will trigger the IllegalStateException:
+			Optional<String> firstElement = stream.findFirst();
+		As the IllegalStateException is a RuntimeException, a compiler will not signalize about a problem. 
+		So, it is very important to remember that Java 8 streams can't be reused.
+	This kind of behavior is logical because streams were designed to provide an ability 
+		to apply a finite sequence of operations to the source of elements in a functional style, but not to store elements.
+	So, to make previous code work properly some changes should be done:
+		List<String> elements =Stream.of("a", "b", "c").filter(element -> element.contains("b")).collect(Collectors.toList());
+		Optional<String> anyElement = elements.stream().findAny();
+		Optional<String> firstElement = elements.stream().findFirst();
+
+
+
+Stream Pipeline
+	To perform a sequence of operations over the elements of the data source and aggregate their results, 
+		three parts are needed – the source, intermediate operation(s) and a terminal operation.
+	Intermediate operations return a new modified stream. 
+	If more than one modification is needed, intermediate operations can be chained. 
+	For example, to create a new stream of the existing one without few elements the skip() method should be used:
+
+Components of the stream are:
+	A data source
+	Set of Intermediate Operations to process the data source
+	Single Terminal Operation that produces the result
+
+What are Intermediate and Terminal operations?
+Intermediate Operations:
+	Process the stream elements.
+	Typically transforms a stream into another stream.
+	Are lazy, i.e., not executed till a terminal operation is invoked.
+	Does internal iteration of all source elements.
+	Any number of operations can be chained in the processing pipeline.
+	Operations are applied as per the defined order.
+	Intermediate operations are mostly lambda functions.
+Terminal Operations:
+	Kick-starts the Stream pipeline.
+	used to collect the processed Stream data.
+
+Stream Operations
+There are many useful operations that can be performed on a stream.
+They are divided into 
+	intermediate operations (return Stream<T>) and 
+		Intermediate operations allow chaining.
+	terminal operations (return a result of definite type). 
+
+	It's also worth noting that operations on streams don't change the source.
+	long count = list.stream().distinct().count();
+
+What is the stateful intermediate operation? Give some examples of stateful intermediate operations.
+	To complete some of the intermediate operations, some state is to be maintained, and such intermediate operations are called stateful intermediate operations. Parallel execution of these types of operations is complex.
+	For Eg: sorted() , distinct() , limit() , skip() etc. 
+	Sending data elements to further steps in the pipeline stops till all the data is sorted for sorted() and stream data elements are stored in temporary data structures
+
+
+Multi-threading With Streams
+	list.parallelStream().forEach(element -> doWork(element));
+	
+
+
+	
+We can process the objects in the following 2 phases 
+ 	1.Configuration 
+ 			We can configure  stream either by using 
+				filter mechanism or 
+				map mechanism.
+ 	2.Processing
+ 				count()
+ 				collect()
+	
+
+Paradigm Shift
+	Fundamental Change in Approach
+	
+	
+	
+Intermediate Operations: return streams
+filter()
+map()
+reduce()
+
+Terminal Operations: return void or T
+forEach()
+collect()
+
+
+Short-Circuiting/loop breaker Methods
+	Intermediate
+		limit()
+	Terminal
+		takeWhile()
+		findFirst()
+			recommended in sequential stream
+		findAny()
+			recommended in parralllel stream
+		anyMatch(Predicate p)
+		allMatch(Predicate p)
+		none match(Predicate p)
+	
+	
+	
+Non-terminal	
+filter()
+map()
+flatmap()
+distinct()
+sorted()
+peek()
+skip()
+limit()
+
+dropWhile()
+takeWhile()
+generate()
+iterate()
+
+Terminal
+	min()
+	max()
+	count()
+	sum()
+	average()
+	reduce()
+	collect()
+	anyMatch()
+	allMatch()
+	noneMatch()
+	findFirst()
+	findAny()
+	forEach()
+	forEachOrdered()
+	toArray()
+
+		
+		
+		
+Functional Programming & Performance
+	Intermediate Stream operations are lazy.
+courses.stream().filter(courses -> courses.length()>11).map(String::toUpperCase).findFirst()
+courses.stream().peek(System.out::println).filter(courses -> courses.length()>11).map(String::toUpperCase).peek(System.out::println).findFirst()
+courses.stream().peek(System.out::println).filter(courses -> courses.length()>11).map(String::toUpperCase).peek(System.out::println)
+$4.findFirst()//Change $4 to your variable name
+
+Improving Performance with Parallalzation of Streams
+		long time = System.currentTimeMillis();
+		//0, 1000000000 869
+		//System.out.println(LongStream.range(0,1000000000).sum());//499999999500000000
+		//601
+		System.out.println(LongStream.range(0,1000000000).parallel().sum());	
+		System.out.println(System.currentTimeMillis() - time);
+
+Using Functional Programming in Java Applications
+	 The best place to start using functional programming in your day-to-day life is in anywhere you would
+	 want to actually process a stream of elements.
+	Anywhere you have a list, a map, a set; any collection that you have, when you are trying to manipulate it,
+	that's the best place for putting all that you have learned about functional programming into practice.
+	Because Java is an object-oriented programming,
+	you might not really change how we structure things but we can definitely start using functional programming
+	wherever you are manipulating lists, wherever you are manipulating a set, or a map.
+	So, as we said earlier, functional programming is a paradigm shift and it involves a different approach
+	to solving the same problems that we were solving earlier.
+			
+			
+Stream Interface
+Arrays class
+Comparator class
+Collectors
+List Interface
+
+List.of() returns unmodifiable list
+	List<String> courses = List.of("Spring", "Spring Boot", "API" , "Microservices","AWS", "PCF","Azure", "Docker", "Kubernetes");
+	courses.replaceAll( str -> str.toUpperCase()) //Error
+	List<String> modifyableCourses = new ArrayList(courses);
+	modifyableCourses.replaceAll(str -> str.toUpperCase())
+	modifyableCourses.removeIf(course -> course.length()<6)
+
+Playing with Files using Functional Programming
+		Files.lines(Paths.get("file.txt")).map(str -> str.split(" ")).flatMap(Arrays::stream).distinct().sorted()
+				.forEach(System.out::println);
+		Files.list(Paths.get(".")).filter(Files::isDirectory).forEach(System.out::println);
+		
+		
+How are Collections different from Stream?
+Collections are the source for the Stream. Java 8 collection API is enhanced with the default methods returning Stream<T> from the collections.
+Collections	Streams
+Data structure holds all the data elements	No data is stored. Have the capacity to process an infinite number of elements on demand
+External Iteration	Internal Iteration
+Can be processed any number of times	Traversed only once
+Elements are easy to access	No direct way of accessing specific elements
+Is a data store	Is an API to process the data
+
+
+
+BaseStream
+Stream
+IntStream

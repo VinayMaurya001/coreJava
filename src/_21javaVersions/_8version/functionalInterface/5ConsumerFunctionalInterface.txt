@@ -1,0 +1,175 @@
+Consumer(I):
+interface Consumer<T> {  
+    	public void accept(T t);
+	}
+
+	  
+	  
+	  
+	  
+	  
+Program for Consumer
+	Example: ConsumerFunctionalInterface.java (m1())
+Program to display Movie Information by using Consumer
+	Example: ConsumerFunctionalInterface.java (m2())
+	
+public class ConsumerFunctionalInterface {
+
+	public static void main(String[] args) {
+		//m1();
+		m2();
+	}
+
+	private static void m2() {
+		ArrayList<Movie> l = new ArrayList<Movie>();
+		populate(l);
+		Consumer<Movie> c = m -> {
+			System.out.println("Movie Name:" + m.name);
+			System.out.println("Movie Hero:" + m.hero);
+			System.out.println("Movie Heroine:" + m.heroine);
+			System.out.println();
+		};
+		for (Movie m : l) {
+			c.accept(m);
+		}
+	}
+
+	public static void populate(ArrayList<Movie> l) {
+		l.add(new Movie("Bahubali", "Prabhas", "Anushka"));
+		l.add(new Movie("Rayees", "Sharukh", "Sunny"));
+		l.add(new Movie("Dangal", "Ameer", "Ritu"));
+		l.add(new Movie("Sultan", "Salman", "Anushka"));
+	}
+
+	private static void m1() {
+		Consumer<String> c = s -> System.out.println(s);
+		c.accept("Hello");
+		c.accept("DURGASOFT");
+	}
+
+}
+
+class Movie {
+	String name;
+	String hero;
+	String heroine;
+
+	Movie(String name, String hero, String heroine) {
+		this.name = name;
+		this.hero = hero;
+		this.heroine = heroine;
+	}
+}
+
+
+
+
+
+
+
+Program for Predicate, Function & Consumer
+	Example: PredicateFunctionConsumerDemo.java
+public class PredicateFunctionConsumerDemo {
+
+	public static void main(String[] args) {
+		m1();
+	}
+
+	private static void m1() {
+		ArrayList<StudentDetails> l = new ArrayList<StudentDetails>();
+		populate(l);
+		
+		Predicate<StudentDetails> p = s -> s.marks >= 60;
+		Function<StudentDetails, String> f = s -> {
+			int marks = s.marks;
+			if (marks >= 80) {
+				return "A[Dictinction]";
+			} else if (marks >= 60) {
+				return "B[First Class]";
+			} else if (marks >= 50) {
+				return "C[Second Class]";
+			} else if (marks >= 35) {
+				return "D[Third Class]";
+			} else {
+				return "E[Failed]";
+			}
+		};
+		Consumer<StudentDetails> c = s -> {
+			System.out.println("Student Name:" + s.name);
+			System.out.println("Student Marks:" + s.marks);
+			System.out.println("Student Grade:" + f.apply(s));
+			System.out.println();
+		};
+		for (StudentDetails s : l) {
+			if (p.test(s)) {
+				c.accept(s);
+			}
+		}
+	}
+
+	public static void populate(ArrayList<StudentDetails> l) {
+		l.add(new StudentDetails("Sunny", 100));
+		l.add(new StudentDetails("Bunny", 65));
+		l.add(new StudentDetails("Chinny", 55));
+		l.add(new StudentDetails("Vinny", 45));
+		l.add(new StudentDetails("Pinny", 25));
+	}
+
+}
+
+class StudentDetails {
+	String name;
+	int marks;
+
+	StudentDetails(String name, int marks) {
+		this.name = name;
+		this.marks = marks;
+	}
+}
+
+
+
+
+
+
+
+
+Consumer Chaining: 
+Just like Predicate Chaining and Function Chaining, Consumer Chaining is also possible. 
+For this Consumer Functional Interface contains default method andThen(). 
+	c1.andThen(c2).andThen(c3).accept(s) 
+		First Consumer c1 will be applied followed by c2 and c3. 
+ 
+Demo Program for Consumer Chaining
+	Example: ConsumerChaining.java
+public class ConsumerChaining {
+
+	public static void main(String[] args) {
+		m1();
+	}
+
+	private static void m1() {
+		Consumer<MovieDetails> c1 = m -> System.out.println("Movie:" + m.name + " is ready to release");
+		Consumer<MovieDetails> c2 = m -> System.out.println("Movie:" + m.name + " is just Released and it is:" + m.result);
+		Consumer<MovieDetails> c3 = m -> System.out.println("Movie:" + m.name + " information storing in the database");
+		
+		Consumer<MovieDetails> chainedC = c1.andThen(c2).andThen(c3);
+		MovieDetails m1 = new MovieDetails("Bahubali", "Hit");
+		chainedC.accept(m1);
+		
+		System.out.println();
+		MovieDetails m2 = new MovieDetails("Spider", "Flop");
+		chainedC.accept(m2);
+	}
+
+}
+
+class MovieDetails {
+	String name;
+	String result;
+
+	MovieDetails(String name, String result) {
+		this.name = name;
+		this.result = result;
+	}
+}

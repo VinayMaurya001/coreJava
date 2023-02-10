@@ -18,7 +18,7 @@ public class FP03FunctionalInterfaces2 {
 
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
-
+	
 		List<Integer> numbers = Arrays.asList(12, 9, 13, 4, 6, 2, 4, 12, 15);
 
 		Predicate<Integer> isEvenPredicate = (Integer x) -> x % 2 == 0;

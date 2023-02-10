@@ -1,0 +1,103 @@
+Iterating
+	Stream API helps to substitute for, for-each and while loops. 
+	It allows concentrating on operation's logic, but not on the iteration over the sequence of elements.
+		boolean isExist = list.stream().anyMatch(element -> element.contains("a"));
+	
+
+
+https://github.com/eugenp/tutorials/tree/master/core-java-modules/core-java-streams-2
+
+https://beginnersbook.com/2017/10/java-8-stream-tutorial/
+http://www.cloud-explained.com/how-stream-api-in-java-works/
+https://stackify.com/streams-guide-java-8/
+	peek() vs forEach()
+http://tutorials.jenkov.com/java-functional-programming/streams.html
+
+
+	
+https://www.javabrahman.com/java-8/the-complete-java-8-comparator-tutorial-with-examples/
+Comparator interface????????????
+
+FP03BehaviorParameterization.java
+FP03FunctionalInterfaces.java
+FP03FunctionalInterfaces2.java
+
+
+Collectors.joining(" ")
+ List<Integer> result =  result.stream().map(Object::toString).collect(joining(" "));// 7 5 9
+
+	
+mapToInt(x->x)
+min(),max(),average(),sum()
+		IntStream intStream = salaryList.stream().mapToInt(sal -> sal);
+		OptionalInt min = intStream.min();
+		int minAsInt = min.getAsInt();
+		System.out.println(minAsInt);
+summaryStatistics()
+	getMin(),getMax(),getAverage(),getSum(),getCount()
+		IntSummaryStatistics summaryStatistics = salaryList.stream().mapToInt(sal -> sal).summaryStatistics();
+		System.out.println(summaryStatistics.getMin());
+		System.out.println(summaryStatistics.getMax());
+		System.out.println(summaryStatistics.getAverage());
+		System.out.println(summaryStatistics.getSum());
+		System.out.println(summaryStatistics.getCount());
+		
+sum()
+		int sum = Stream.of(1, 2, 3).reduce(0, (a, b) -> a + b);
+		int sum = numbers.stream().reduce(0, Integer::sum);
+		int sum = numbers.parallelStream().reduce(0, Integer::sum);
+		 	IntStream.of(integers).sum();
+		 	
+		 If you have a list of objects and wanted to sum specific fields of this object use the below.
+				List<ResultSom> somList = MyUtil.getResultSom();
+				BigDecimal result= somList.stream().map(ResultSom::getNetto).reduce(BigDecimal.ZERO, BigDecimal::add);
+		System.out.println(sum);
+		sum = Stream.of(10, 2, 3).mapToInt(x -> x).sum();
+		System.out.println(sum);
+		System.out.println(Arrays.asList(1, 2, 3).stream().mapToInt(i -> i.intValue()).sum());
+		System.out.println(Arrays.asList(1, 2, 3).stream().mapToInt(Integer::intValue).sum());
+	     stream().collect(Collectors.summingInt(Integer::intValue));
+	LongAdder a = new LongAdder();
+map.values().parallelStream().forEach(a::add);
+sum = a.intValue();
+
+avg()
+count()
+	
+		List<Integer> a = Arrays.asList(1, 2, 3,5);
+		List<Integer> b = Arrays.asList(2, 2, 1,2);
+		List<Integer> list = Arrays.asList(
+				(int) IntStream.range(0, a.size()).filter(i -> a.get(i) > b.get(i)).count(),
+				(int) IntStream.range(0, a.size()).filter(i -> a.get(i) < b.get(i)).count());
+		System.out.println(list);//[2, 1]
+		Arrays.stream(arr).parallel().sum()
+max()
+
+
+
+
+
+
+Higher Order functions
+Predicate<Course> reviewScoreGreaterThan95Predicate2 = createPredicateWithCutoffReviewScore(95);
+private static Predicate<Course> createPredicateWithCutoffReviewScore(int cutoffReviewScore) {
+		return course -> course.getReviewScore() > cutoffReviewScore;
+	}
+	
+
+JShellCode.md
+
+The for-each iteration
+External iterators(Sequential)
+	For loop
+	For each/for in loop
+Internal iterators(Parallel)
+	Lambda for each loop
+		It makes parallel processing for processor because it is not sequential like external iterators.?????
+
+	
+	
+https://mkyong.com/java8/java-how-to-convert-array-to-stream/
+https://www.baeldung.com/java-array-sum-average
+	Arrays.stream(array).mapToInt(Integer::intValue).sum();
+	Arrays.stream(array).average().orElse(Double.NaN)

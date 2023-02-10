@@ -1,0 +1,98 @@
+public final class Collectors  (in java.util.stream)
+
+     // Accumulate names into a List
+     List<String> list = people.stream().map(Person::getName).collect(Collectors.toList());
+
+     // Accumulate names into a TreeSet
+     Set<String> set = people.stream().map(Person::getName).collect(Collectors.toCollection(TreeSet::new));
+
+     // Convert elements to strings and concatenate them, separated by commas
+     String joined = things.stream()
+                           .map(Object::toString)
+                           .collect(Collectors.joining(", "));
+
+     // Compute sum of salaries of employee
+     int total = employees.stream()
+                          .collect(Collectors.summingInt(Employee::getSalary)));
+
+     // Group employees by department
+     Map<Department, List<Employee>> byDept
+         = employees.stream()
+                    .collect(Collectors.groupingBy(Employee::getDepartment));
+
+     // Compute sum of salaries by department
+     Map<Department, Integer> totalByDept
+         = employees.stream()
+                    .collect(Collectors.groupingBy(Employee::getDepartment,
+                                                   Collectors.summingInt(Employee::getSalary)));
+
+     // Partition students into passing and failing
+     Map<Boolean, List<Student>> passingFailing =
+         students.stream()
+                 .collect(Collectors.partitioningBy(s -> s.getGrade() >= PASS_THRESHOLD));
+                 
+public static <T> Collector<T, ?, List<T>> toList() {}
+public static <T> Collector<T, ?, List<T>> toUnmodifiableList() {}
+public static <T> Collector<T, ?, Set<T>> toSet() {}
+public static <T> Collector<T, ?, Set<T>> toUnmodifiableSet() {}
+public static <T, C extends Collection<T>> Collector<T, ?, C> toCollection(Supplier<C> collectionFactory) {}
+public static <T, K, U>
+    Collector<T, ?, Map<K,U>> toMap(Function<? super T, ? extends K> keyMapper,
+                                    Function<? super T, ? extends U> valueMapper) {}
+
+public static Collector<CharSequence, ?, String> joining() {}
+public static Collector<CharSequence, ?, String> joining(CharSequence delimiter) {}
+public static Collector<CharSequence, ?, String> joining(CharSequence delimiter,
+                                                             CharSequence prefix,
+                                                             CharSequence suffix) {}
+                                                             
+                                                             
+public static <T> Collector<T, ?, Long> counting() {}
+public static <T> Collector<T, ?, Optional<T>> minBy(Comparator<? super T> comparator) { }                                                          
+public static <T> Collector<T, ?, Optional<T>> maxBy(Comparator<? super T> comparator) {}
+
+public static <T> Collector<T, ?, Integer> summingInt(ToIntFunction<? super T> mapper) {}
+
+public static <T> Collector<T, ?, T>    reducing(T identity, BinaryOperator<T> op) {}
+public static <T> Collector<T, ?, Optional<T>> reducing(BinaryOperator<T> op) {}
+public static <T, U> Collector<T, ?, U> reducing(U identity, Function<? super T, ? extends U> mapper,BinaryOperator<U> op) {
+Map<City, Optional<Person>> tallestByCity
+        = people.stream().collect(
+          groupingBy(Person::getCity,
+                     reducing(BinaryOperator.maxBy(byHeight))))
+Map<City, String> longestLastNameByCity
+        = people.stream().collect(
+          groupingBy(Person::getCity,
+                     reducing("",
+                              Person::getLastName,
+                              BinaryOperator.maxBy(byLength))));
+
+
+public static <T, K> Collector<T, ?, Map<K, List<T>>> groupingBy(Function<? super T, ? extends K> classifier) {}
+public static <T, K, A, D> Collector<T, ?, Map<K, D>> groupingBy(Function<? super T, ? extends K> classifier,Collector<? super T, A, D> downstream) {}
+public static <T, K, D, A, M extends Map<K, D>>
+    Collector<T, ?, M> groupingBy(Function<? super T, ? extends K> classifier,
+                                  Supplier<M> mapFactory,
+                                  Collector<? super T, A, D> downstream) {}
+courses.stream().collect(Collectors.groupingBy(Course::getCategory))
+Map<String,List<Course>> map=Collectors.groupingBy(Course::getCategory)
+Map<String,List<Course>> map=Collectors.groupingBy(Course::getCategory, Collectors.toList())
+Map<String,Set<Course>> map=Collectors.groupingBy(Course::getCategory,Collectors.toSet())
+Map<String,Set<Course>> map=Collectors.groupingBy(Course::getCategory,Tree::new,Collectors.toSet())
+
+Map<String, Long> map =Collectors.groupingBy(Course::getCategory, Collectors.counting())
+Collectors.groupingBy(Course::getCategory, Collectors.maxBy(Comparator.comparing(Course::getReviewScore)))
+Collectors.groupingBy(Course::getCategory, Collectors.mapping(Course::getName, Collectors.toList()))
+
+
+
+
+
+public static <T>
+    Collector<T, ?, Map<Boolean, List<T>>> partitioningBy(Predicate<? super T> predicate) {}
+public static <T, D, A>
+    Collector<T, ?, Map<Boolean, D>> partitioningBy(Predicate<? super T> predicate,
+                                                    Collector<? super T, A, D> downstream) {}
+
+public static <T>
+    Collector<T, ?, IntSummaryStatistics> summarizingInt(ToIntFunction<? super T> mapper) {}

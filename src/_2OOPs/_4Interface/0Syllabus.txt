@@ -17,6 +17,8 @@ Interface
 	Conclusions
 
 	Default method
+	
+	https://blogs.oracle.com/javamagazine/post/the-evolving-nature-of-java-interfaces
 Static method
 
 

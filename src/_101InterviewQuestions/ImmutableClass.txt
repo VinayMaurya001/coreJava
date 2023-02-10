@@ -1,0 +1,52 @@
+Immutable class
+	An object is immutable when its state doesn’t change after it has been initialized.
+
+	Example : 
+		String
+		All the wrapper classes (like Integer, Boolean, Byte, Short)
+		StackTraceElement
+		BigInteger, BigDecimal
+		java.io.File
+		java.nio.Path
+		java.nio.Charset
+		java.nio.FileTime
+		some of the AWT classes (i.e. Font, Color, BasicStroke, Cursor)
+		Locale
+		UUID
+		Some collections returned by the Collections helper class are immutable
+		URL and URI
+		Inet4Address, Inet6Address and InetSocketAddress
+		java.net.Proxy
+		quite a few classes in the java.security package
+		And then there are classes with can not be instantiated and only do have static methods (Collections, Arrays, Void, Math, …)
+
+	However, immutable objects also have the following benefits:
+		An immutable class is good for caching purposes because you don’t have to worry about the value changes.
+		An immutable class is inherently thread-safe, so you don’t have to worry about thread safety in multi-threaded environments.
+
+How to create Immutable class
+		final class
+			Declare the class as final so it can’t be extended.
+		private & final variables
+			Make all of the fields private so that direct access is not allowed.
+			Make all mutable fields final so that a field’s value can be assigned only once.
+		public constructor
+			Initialize all fields using a constructor method performing deep copy.
+		No setter, Only public getter
+			Don’t provide setter methods for variables.
+			Perform cloning of objects in the getter methods to return a copy rather than returning the actual object reference.
+		https://www.digitalocean.com/community/tutorials/how-to-create-immutable-class-in-java
+		
+https://www.journaldev.com/129/how-to-create-immutable-class-in-java
+https://www.journaldev.com/1425/builder-design-pattern-in-java
+https://www.journaldev.com/1432/java-immutable-class-builder
+https://www.journaldev.com/802/string-immutable-final-java
+https://www.journaldev.com/1432/java-immutable-class-builder
+https://www.youtube.com/watch?v=cJac9U4IgqE&list=PL5Y4hrqdSfftW0CuiKWbALAxLFbE9movj&index=16
+https://www.digitalocean.com/community/tutorials/string-immutable-final-java
+
+Cloning
+https://www.journaldev.com/60/java-clone-object-cloning-java
+https://www.journaldev.com/21078/copy-constructor-in-java
+https://www.journaldev.com/17129/java-deep-copy-object
+https://www.journaldev.com/753/java-copy-array-array-copy-java

@@ -1,0 +1,75 @@
+Anonymous inner classes and Lambda Expressions
+	Anonymous inner class! = Lambda Expression
+	Lambda Expression doesn"t come as a replacement of anonymous inner class.
+	Anonymous inner class can extend concrete class, can extend abstract class, can implement interface with any number of methods. 
+		but Lambda expression can implement an interface with only single abstract method (Functional Interface).
+	Hence if anonymous inner class implements Functional Interface in that particular case only we can replace with lambda expressions. 
+		Hence wherever anonymous inner class concept is there, it may not always possible to replace with Lambda expressions.
+	If anonymous inner class implementing functional interface or containing only one method, 
+		then we may use Lambda expression in place of anonymous inner class,
+		to reduce length of the code and to resolve complexity.
+Ex:
+class ThreadDemo {
+ public static void main(String[] args) {
+ 	Runnable runnable = () -> {
+ 		for(int i=0; i<10; i++) {
+ 			System.out.println("Child Thread");
+ 		}
+ 	};
+ 	Thread t = new Thread(runnable);
+ 	t.start();
+ 	for(i=0; i<10; i++) {
+ 		System.out.println("Main Thread");
+ 	}
+ }
+}
+
+
+
+
+Differences between anonymous inner classes and Lambda expression
+1)It's a class without name 
+	It's a method without name (anonymous function)
+2)Anonymous inner class can extend Abstract and concrete classes
+	Lambda expression cann't extend Abstract and concrete classes
+3)Anonymous inner class can implement an interface that contains any number of Abstract methods
+	Lambda expression can implement an Interface which contains single abstract method (Functional Interface)
+4) Inside anonymous inner class we can Declare instance variables.
+   Inside lambda expression we cann't Declare instance variables, 
+   whatever the variables declared are simply acts as local variables.
+5) Anonymous inner classes can be Instantiated
+	Lambda expressions cann't be instantiated
+6)Anonymous inner class is the best choice If we want to handle multiple methods.
+	Lambda expression is the best Choice if we want to handle interface With single abstract method (Functional Interface).
+7)In the case of anonymous inner class at the time of compilation a separate Dot class file will be generated(outerclass$1.class)
+	At the time of compilation no dot Class file will be generated for Lambda expression. 
+	It simply converts into private static method of outer class.
+		https://stackoverflow.com/questions/42011685/lambda-accessibility-to-private-methods
+8)Memory allocated on demand,Whenever we are creating an object.
+	Reside in permanent memory of JVM (Method Area).
+9)	When you use an inner class, it creates a new scope. 
+		You can hide local variables from the enclosing scope by instantiating new local variables with the same names. 
+		You can also use the keyword this inside your inner class as a reference to its instance.
+	However, lambda expressions work with enclosing scope. 
+		You can’t hide variables from the enclosing scope inside the lambda’s body. 
+			Lambda expression's local variable x cannot redeclare another local variable defined in an enclosing scope.
+		In this case, the keyword this is a reference to an enclosing instance.
+10)Inside anonymous inner class "this" always refers current anonymous Inner class object but not outer class Object.
+	Within lambda expression "this" keyword represents current outer class object reference 
+		(that is current enclosing class reference in which we declare lambda expression)
+	interface Interf {
+		public void m1();
+	}
+	class Test {
+		int x = 777;
+		public void m2() {
+			Interf i = ()-> {
+ 				int x = 888;
+ 				System.out.println(x); 888
+ 				System.out.println(this.x); 777
+ 			};
+ 			i.m1();
+ 		}
+	}
+	
+	

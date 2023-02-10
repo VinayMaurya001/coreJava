@@ -1,0 +1,159 @@
+Lambda Expressions with Collections 
+
+Sorted Collections: 
+	1. Sorted List 
+	2. Sorted Set 
+	3. Sorted Map 
+ 
+1. Sorted List: 
+	List(may be ArrayList,LinkedList,Vector or Stack) never talks about sorting order. 
+	If we want sorting for the list then we should use Collections class sort() method. 
+	Collecttions.sort(list)==>meant for Default Natural Sorting Order 
+	For String objects: Alphabetical Order 
+	For Numbers : Ascending order 
+
+	Instead of Default natural sorting order if we want customized sorting order then we should go for Comparator interface. 
+	Comparator interface contains only one abstract method: compare() Hence it is Functional interface. 
+	public int compare(obj1,obj2) 
+		returns -ve  iff obj1 has to come before obj2 
+		returns +ve  iff obj1 has to come after obj2 
+		returns 0  iff obj1 and obj2 are equal  
+	Collections.sort(list,Comparator)==>meant for Customized Sorting Order 
+
+	Demo Program to Sort elements of ArrayList according to Defaut Natural Sorting Order(Ascending Order): 
+	class Test{
+		public static void main(String[] args){
+        	ArrayList<Integer> l = new ArrayList<Integer>(); 
+			l.add(10); 
+			l.add(0);   
+			l.add(15);   
+			l.add(5);   
+			l.add(20);   
+			System.out.println("Before Sorting:"+l);  
+			Collections.sort(l);
+			System.out.println("After Sorting:"+l);  
+			Collections.sort(al, (I1, I2) -> (I1 < I2) ? -1 : (I1 > I2) ? 1 : 0);// Ascending order
+		System.out.println("After sorting ArrayList: " + al);
+		Collections.sort(al, (I1, I2) -> I1.compareTo(I2));// Ascending
+		System.out.println("After sorting ArrayList: " + al);
+		}
+	}   
+	
+	Demo Program to Sort elements of ArrayList according to Customized Sorting Order(Descending Order):
+		class MyComparator implements Comparator<Integer>   4) {
+   			public int compare(Integer I1,Integer I2)  {
+				if(I1<I2){
+					return +1;   
+				} else if(I1>I2){
+        			return -1; 
+	    		}  else {
+       			     return 0;  
+				}
+			}
+		}
+		Shortcut way: 
+			class MyComparator implements Comparator<Integer>   5) {
+    			public int compare(Integer I1,Integer I2){
+					return (I1>I2)?-1:(I1<I2)?1:0;
+				}
+			}
+	Sorting with Lambda Expressions: 
+		As Comparator is Functional interface, we can replace its implementation with Lambda Expression 
+		Collections.sort(l,(I1,I2)->(I1<I2)?1:(I1>I2)?-1:0);  
+		Program to Sort elements of ArrayList according to Customized Sorting Order By using Lambda Expressions(Descending Order): 
+			Example: CollectionWithLembdaExpression.java
+
+
+2. Sorted Set  
+	In the case of Set, if we want Sorting order then we should go for TreeSet 
+		TreeSet t = new TreeSet();       
+			This TreeSet object meant for default natural sorting order 
+		TreeSet t = new TreeSet(Comparator c);    
+			This TreeSet object meant for Customized Sorting Order 
+ 
+	Demo Program for Default Natural Sorting Order(Ascending Order): 
+	class Test {
+    	public static void main(String[] args) {
+			TreeSet<Integer> al = new TreeSet<Integer>();// Ascending order
+		al.add(10);
+		al.add(0);
+		al.add(15);
+		al.add(5);
+		al.add(20);
+		System.out.println("Before sorting TreeSet: " + al);
+		TreeSet<Integer> al2 = new TreeSet<Integer>((I1, I2) -> (I1 > I2) ? -1 : (I1 < I2) ? 1 : 0);// Descending
+		al2.add(10);
+		al2.add(0);
+		al2.add(15);
+		al2.add(5);
+		al2.add(20);
+		System.out.println("After sorting TreeSet: " + al2);
+		}
+	}	
+	
+
+
+3. Sorted Map: 
+In the case of Map, if we want default natural sorting order of keys then we should go for TreeMap. 
+	TreeMap m = new TreeMap();       
+		This TreeMap object meant for default natural sorting order of keys 
+	TreeMap t = new TreeMap(Comparator c);    
+		This TreeMap object meant for Customized Sorting Order of keys 
+
+Demo Program for Default Natural Sorting Order(Ascending Order): 
+class Test{
+    public static void main(String[] args) {
+		TreeMap<Integer, String> tm = new TreeMap<Integer, String>();// Ascending
+		tm.put(100, "Hunny");
+		tm.put(105, "Bunny");
+		tm.put(109, "Sunny");
+		tm.put(108, "Chinny");
+		tm.put(106, "Punny");
+		tm.put(107, "Munny");
+		System.out.println("Before sorting TreeSet: " + tm);
+		tm = new TreeMap<Integer, String>((I1, I2) -> (I1 > I2) ? -1 : (I1 < I2) ? 1 : 0);// Descending
+		tm.put(100, "Hunny");
+		tm.put(105, "Bunny");
+		tm.put(109, "Sunny");
+		tm.put(108, "Chinny");
+		tm.put(106, "Punny");
+		tm.put(107, "Munny");
+		System.out.println("After sorting TreeSet: " + tm);
+	}
+}	
+
+
+Sorting for Customized class objects by using Lambda Expressions:
+class Employee  {
+	int eno; 
+	String ename;   
+	Employee(int eno,String ename){
+		this.eno=eno;  
+		this.ename=ename;  
+	}
+    public String toString() {
+        return eno+":"+ename;
+	}   
+}
+class Test {
+	public static void main(String[] args){
+    	ArrayList<Employee> l= new ArrayList<Employee>();  
+		l.add(new Employee(100,"Katrina"));   
+		l.add(new Employee(600,"Kareena"));  
+		l.add(new Employee(200,"Deepika"));  
+	    l.add(new Employee(400,"Sunny")); 
+	    l.add(new Employee(500,"Alia"));  
+		l.add(new Employee(300,"Mallika"));  
+		System.out.println("Before Sorting:"); 
+		System.out.println(l);  	
+		Collections.sort(l,(e1,e2)->(e1.eno<e2.eno)?-1:(e1.eno>e2.eno)?1:0);   
+		System.out.println("After Sorting:");  
+		System.out.println(l);
+	}
+}	
+Output: 
+Before Sorting: 
+[100:Katrina, 600:Kareena, 200:Deepika, 400:Sunny, 500:Alia, 300:Mallika] 
+After Sorting: 
+[100:Katrina, 200:Deepika, 300:Mallika, 400:Sunny, 500:Alia, 600:Kareena] 
+ 

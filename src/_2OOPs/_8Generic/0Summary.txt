@@ -1,17 +1,15 @@
-
 Introduction
 
 Main objective of generics:
 	to provide Type safety(during insertion) and 
 	to resolve type casting problem(during retrival).  
-	Generics add stability to your code by making more of your bugs detectable at compile time. 
-	
+	Generics add stability to your code by making more of your bugs detectable at compile time. 	
 	Code Reuse: We can write a method/class/interface once and use for any type we want.
 	Implementing generic algorithms: By using generics, we can implement algorithms that work on different types of objects 
 		and at the same they are type safe too.  
 
 Collection & Generics
-	Polymorphism concept is applicable only for the base type but not for the parameter type
+	Polymorphism concept is applicable only for the base type but not for the parameter type(or  type variables)
 		Collection<String> l=new ArrayList<String>();
 		ArrayList<Object> l=new ArrayList<String>();//CTE, incompatible type
 	Collections cannot hold primitive type value.

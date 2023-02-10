@@ -1,0 +1,189 @@
+Method References
+	https://www.baeldung.com/java-8-new-features#method-references
+	Method reference can be used as a shorter and more readable alternative for a lambda expression 
+		which only calls an existing method. 
+	Method reference is used to refer method of functional interface.
+
+There are four variants of method references
+1)Reference to a Static Method
+	ContainingClass::methodName.
+	boolean isReal = list.stream().anyMatch(u -> User.isRealUser(u));
+	boolean isReal = list.stream().anyMatch(User::isRealUser);
+2)Instance Method Reference of a particular object.
+	containingInstance::methodName
+	User user = new User();
+	boolean isLegalName = list.stream().anyMatch(user::isLegalName);
+3)Reference to an Instance Method of an Object of a Particular Type
+	ContainingType::methodName
+	long count = list.stream().filter(String::isEmpty).count();
+4)Reference to a Constructor
+	ClassName::new
+	As constructor in Java is a special method, method reference could be applied to it too 
+		with the help of new as a method name.
+	Stream<User> stream = list.stream().map(User::new);
+	Ex:
+		Interf f = Sample :: new;            
+		functional interface f referring Sample class constructor 
+5)Method References from a super class method
+	Reference to super class & child class method using super & this keyword
+	interface A {
+		public void sayHello();
+	}
+	class SuperClass {
+		public void superHello(){
+			System.out.println("I am inside SuperTest class");
+		}
+	}
+	class ChildClass extends SuperClass{
+		public void childHello() {
+			System.out.println("I am inside SubTest class");
+		}
+		public void testHello() {
+			
+		//***Using Method reference :super class method***//
+		A a1= super::superHello;
+		a1.sayHello();
+		
+		//***Using Lambda Expression :super class method***//
+		A a3= () -> System.out.println("I am inside SuperTest class");
+		a3.sayHello(); 
+		
+		//***Using Method reference :current class method***//
+		A a2= this::childHello;
+		a2.sayHello();
+		
+		//***Using Lambda Expression :current class method***//
+		A a4= () -> System.out.println("I am inside SubTest class");
+		a4.sayHello();
+		}
+	}
+	public class Test {
+		public static void main(String[] args) {	
+			ChildClass t = new ChildClass();
+			t.testHello();
+		}
+	}
+ 
+
+Functional Interface method can be mapped to our specified method by using :: (double colon) operator. 
+	This is called method reference. 
+Our specified method can be either static method or instance method or constructor.
+Functional Interface method and our specified method should have same argument types, 
+	except this the remaining things like  returntype, methodname, modifiers etc are not required to match. 
+In method and constructor references compulsory the argument types must be matched.
+In c++, :: operator is called as Scope resolution operator.
+
+Functional Interface can refer lambda expression and Functional Interface can also refer method reference. 
+	Hence lambda expression can be replaced with method reference.
+	Hence method reference is alternative syntax to lambda expression. 
+	
+	MethodReference is simplified version of Lambda.
+	x->System.out.println(x); is similar to  System.out::println
+	
+	public class FP03MethodReferences {
+		private static void print1(String str) {
+			System.out.println(str);
+		}
+		public static void main(String[] args) {
+			List<String> courses = Arrays.asList("Spring", "Spring Boot", "API");
+			courses.stream()
+				// .map(str -> str.toUpperCase())
+				.map(String::toUpperCase)// Instance Method Reference
+				// .forEach((str)->print1(str));
+				.forEach(FP03MethodReferences::print1);// Static Method Reference
+			Supplier<String> supplier = String::new;// Contructore Reference
+		}
+	}
+	
+	
+Advantage of Method reference
+	The main advantage of method reference is we can use already existing code to implement functional interfaces (code re-usability). 
+	Method references can be considered as an alternative way/syntax to writing lambda. It is very readable in certain scenarios.
+
+ 
+
+Ex1: 
+Method reference to Static method:
+With Lambda Expression 
+public class Test {
+	public static void main(String[] args) {
+		Runnable r = () -> {
+			for (int i = 0; i <= 10; i++) {
+				System.out.println("Child Thread");
+			}
+		};
+		Thread t = new Thread(r);
+		t.start();
+		for (int i = 0; i <= 10; i++) {
+			System.out.println("Main Thread");
+		}
+	}
+}
+With Method Reference 
+public class Test {
+	public static void m1() {
+		for (int i = 0; i <= 10; i++) {
+			System.out.println("Child Thread");
+		}
+	}
+	public static void main(String[] args) {
+		Runnable r = Test::m1;
+		Thread t = new Thread(r);
+		t.start();
+		for (int i = 0; i <= 10; i++) {
+			System.out.println("Main Thread");
+		}
+	}
+}
+In the above example Runnable interface run() method referring to Test class static method m1().
+
+
+
+Ex2
+Method reference to Instance method:
+Example:
+interface Interf {
+	public void m1(int i);
+}
+class Test {
+	public void m2(int i) {
+		System.out.println("From Method Reference:" + i);
+	}
+	public static void main(String[] args) {
+		Interf f = i -> System.out.println("From Lambda Expression:" + i);
+		f.m1(10);
+		Test t = new Test();
+		Interf i1 = t::m2;
+		i1.m1(20);
+	}
+}
+In the above example functional interface method m1() referring to Test class instance method m2(). 
+
+
+Ex3:
+Costructor reference to Constructor:
+class Sample {
+	private String s;
+	Sample(String s) {
+		this.s = s;
+		System.out.println("Constructor Executed:" + s);
+	}
+}
+interface Interf {
+	public Sample get(String s);
+}
+class Test {
+	public static void main(String[] args) {
+		Interf f = s -> new Sample(s);
+		f.get("From Lambda Expression");
+		Interf f1 = Sample::new;
+		f1.get("From Constructor Reference");
+	}
+}
+ 
+
+
+
+
+
+

@@ -1,0 +1,74 @@
+Keypoints
+
+Static methods inside interface: 
+	From 1.8 version onwards in addition to default methods, 
+	We can write static methods also inside interface to define utility functions. 
+	Interface static methods by-default not available to the implementation classes 
+	 	hence by using implementation class reference we can’t call interface static  
+	We should call interface static methods by using interface name.
+	The static method can't be overridden by an implementing class.
+
+Uses: Just to define general utility methods inside interface, we can declare static method.
+Ex: 
+1) interface Interf {   
+2)           public static void sum(int a, int b) {   
+3)                     System.out.println("The Sum:"+(a+b));   
+4)           }   
+5) }   
+6) class Test implements Interf {   
+7)            public static void main(String[] args) {    
+8)                      Test t = new Test();   
+9)                      t.sum(10, 20); //CTE (because interface "StaticMethod" not available to the implementation class)  
+10)                      Test.sum(10, 20); //CTE   
+11)                      Interf.sum(10, 20);   
+12)          }   
+13) }  
+
+As interface static methods by default not available to the implementation class, overriding concept is not applicable. 
+Based on our requirement we can define exactly same method in the implementation class, it’s valid but not overriding.  
+Ex:1 
+1) interface Interf {   
+2)          public static void m1() {}   
+3) }   
+4) class Test implements Interf {   
+5)             public static void m1() {}   
+6) }   
+It’s valid but not overriding
+
+Ex:2 
+1) interface Interf {   
+2)         public static void m1() {}   
+3) }   
+4) class Test implements Interf {   
+5)          public void m1() {}   
+6) }   
+This’s valid but not overriding 
+ 
+Ex3: 
+1) class P {   
+2)        private void m1() {}   
+3) }   
+4) class C extends P {   
+5)          public void m1() {}   
+6) }   
+This’s valid but not overriding 
+ 
+ 
+ 
+ 
+From 1.8 version onwards we can write main() method inside interface and 
+	hence  we can run interface directly from the command prompt. 
+Ex: 
+1) interface Interf {   
+2)         public static void main(String[] args) {   
+3)                  System.out.println("Interface Main Method");   
+4)         }   
+5) }   
+At the command prompt: 
+Javac Interf.Java 
+Java Interf 
+ 
+ 
+
+ 
+ 

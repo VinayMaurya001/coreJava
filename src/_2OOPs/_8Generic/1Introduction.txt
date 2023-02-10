@@ -84,7 +84,7 @@ al.add("Abhinav");
 al.add(new Integer(10));//NO CTE
 al.add("Shiv");
 
-Non Generics version of ArrayList object
+Generics version of ArrayList object
 To hold only String type of objects, we can create generic version of ArrayList object as follows
 ArrayList<String> al=new ArrayList<String>();
 al.add("Abhinav");
@@ -109,33 +109,6 @@ For this ArrayList we can add only String type of object & hence it is Type-safe
 3)At the time of retrieval, we have to perform Type-casting.	
 At the time of retrieval, we are not required to performType-casting.
 
-
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 Example
 	Data.java  GenericData.java m1() 
 	Data2.java  GenericData.java m2() m3() m4() 
@@ -184,7 +157,6 @@ Type Parameter and Type Argument Terminology:
 Many developers use the terms "type parameter" and "type argument" interchangeably, but these terms are not the same. 
 When coding, one provides type arguments in order to create a parameterized type. 
 Therefore, the T in Foo<T> is a type parameter and the String in Foo<String> f is a type argument. 
-This lesson observes this definition when using these terms.
 
 The Diamond
 In Java SE 7 and later, you can replace the type arguments required to invoke the constructor of a generic class 
@@ -213,7 +185,8 @@ If the actual type argument is omitted, you create a raw type of Box<T>:
 Box rawBox = new Box();
 Therefore, Box is the raw type of the generic type Box<T>. However, a non-generic class or interface type is not a raw type.
 Raw types show up in legacy code because lots of API classes (such as the Collections classes) were not generic prior to JDK 5.0. 
-When using raw types, you essentially get pre-generics behavior — a Box gives you Objects. 
+When using raw types, you essentially get pre-generics behavior  a Box gives you Objects. 
+
 For backward compatibility, assigning a parameterized type to its raw type is allowed:
 Box<String> stringBox = new Box<>();
 Box rawBox = stringBox;               // OK

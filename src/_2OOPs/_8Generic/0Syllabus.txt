@@ -1,3 +1,7 @@
+https://blogs.oracle.com/javamagazine/post/understanding-java-generics-part-1-principles-and-fundamentals
+https://blogs.oracle.com/javamagazine/post/understanding-java-generics-part-2-the-hard-part
+https://docs.oracle.com/javase/tutorial/extra/generics/index.html
+
 Introduction
 	Objective of generics
 		to provide Type safety and 
@@ -21,7 +25,8 @@ Introduction
     				private T t;
     				public NaturalNumber(T t)  { this.t = t; }
     				public boolean isEven() {
-        			return t.intValue() % 2 == 0;}
+        				return t.intValue() % 2 == 0;
+        			}
 				The isEven method invokes the intValue method defined in the Integer class through t.
 			Generic Methods and Bounded Type Parameters
 				Bounded type parameters are key to the implementation of generic algorithms. 
@@ -53,8 +58,8 @@ Type Inference and Instantiation of Generic Classes
 	This pair of angle brackets is informally called the diamond.
 Type Inference and Generic Constructors of Generic and Non-Generic Classes
 	class MyClass<X> {
-  <T> MyClass(T t) {
-    // ... }}
+  		<T> MyClass(T t) {
+    		// ... }}
 	new MyClass<Integer>("")
 
 
@@ -74,7 +79,7 @@ Type erasure
 
 
 
-https://docs.oracle.com/javase/tutorial/extra/generics/index.html
+
 
 
 

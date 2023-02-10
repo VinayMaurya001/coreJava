@@ -1,0 +1,76 @@
+Thread (Concurrency vs Parellelism)
+How to create a thread
+	Thread
+	Runnable
+	Callable
+Executors & Thread Pools
+Multithreaded Merge Sort
+
+Advantage
+Disadvantage
+	Synchronization problem /Data Inconsistency problem
+Adder Subtractor
+Techniques to solve synchronization problems
+
+
+Thread
+	Thread is a seperate path of CPU execution.
+	It is a smallest unit of CPU execution.
+
+	It is a lightweight than process.
+
+Single Core CPU
+	COntext switching
+	Concurrency 
+	Parellelism not possible
+Multi Core CPU
+	Parellelism
+
+
+A process always consists of atleast 1 thread.
+	Process starts with main thread.
+
+Process has Code, Data, Resources like I/O, threads
+Process is heavy weight
+Process is expensive to create
+
+program counter 
+	it is a variable which store next execution line
+	One program counter per thread
+
+With multiple Threads, it is easier to share data.
+
+
+Never think in terms of thread
+Always think in terms of task.
+	Thing/Action that I want to do in Parallel
+
+
+Concurrency vs Parellelism
+Concurrency is a system where multiple task are in diff stages of execution at the same time but they may or may not be making progress at the same time.
+Parellelism is a system where multiple task are in diff stages of execution at the same time but they must be making progress at the same time.
+
+All parallel system are concurrent.
+All concurrent system are parallel.
+
+
+Can we achieve parallelism with one core? 
+
+
+Print 1 to 100 using diff thread
+
+
+
+Executor -Production Factory
+	Queue
+	Worker pool
+
+
+How to decide the size of thread pool?
+	a)CPU intensive like machine learning task
+		less no of thread
+		fn(no of cpu)		
+	b)I/O intensive like api call that call other apis
+			more no of thread so CPU utilization can be increased
+
+

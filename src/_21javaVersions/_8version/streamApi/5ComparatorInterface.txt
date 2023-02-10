@@ -1,0 +1,50 @@
+
+package java.util.Comparator;
+@FunctionalInterface
+public interface Comparator<T> {
+    
+    int compare(T o1, T o2);
+
+    boolean equals(Object obj);
+
+    
+    default Comparator<T> thenComparing(Comparator<? super T> other) {}
+    default <U> Comparator<T> thenComparing(Function<? super T, ? extends U> keyExtractor,Comparator<? super U> keyComparator){}
+    default <U extends Comparable<? super U>> Comparator<T> thenComparing(Function<? super T, ? extends U> keyExtractor){}    
+    default Comparator<T> thenComparingInt(ToIntFunction<? super T> keyExtractor) {}
+    default Comparator<T> thenComparingLong(ToLongFunction<? super T> keyExtractor) {}
+    default Comparator<T> thenComparingDouble(ToDoubleFunction<? super T> keyExtractor) {}
+
+    default Comparator<T> reversed() {
+        return Collections.reverseOrder(this);
+    }
+    
+    public static <T extends Comparable<? super T>> Comparator<T> reverseOrder() {
+        return Collections.reverseOrder();
+    }
+    	Collections.sort(list, Comparator.reverseOrder());
+    	
+    public static <T extends Comparable<? super T>> Comparator<T> naturalOrder() {}
+
+    
+    public static <T> Comparator<T> nullsFirst(Comparator<? super T> comparator) {}
+    public static <T> Comparator<T> nullsLast(Comparator<? super T> comparator) {}
+
+    
+    public static <T, U extends Comparable<? super U>> Comparator<T> comparing(Function<? super T, ? extends U> keyExtractor){}
+    		Collections.sort(list, Comparator.comparing(a -> a.getAge()));
+    public static <T, U> Comparator<T> comparing(Function<? super T, ? extends U> keyExtractor,Comparator<? super U> keyComparator){}
+    		Comparator<A> cmp = Comparator.comparing(A::getName, String.CASE_INSENSITIVE_ORDER);	
+    public static <T> Comparator<T> comparingInt(ToIntFunction<? super T> keyExtractor) {}
+    public static <T> Comparator<T> comparingLong(ToLongFunction<? super T> keyExtractor) {}
+    public static<T> Comparator<T> comparingDouble(ToDoubleFunction<? super T> keyExtractor) {}
+    
+		Comparator<Course> comparingByNoOfStudentsIncreasing = Comparator.comparingInt(Course::getNoOfStudents);
+		Comparator<Course> comparingByNoOfStudentsAndNoOfReviews 
+				= Comparator.comparingInt(Course::getNoOfStudents)
+							.thenComparingInt(Course::getReviewScore)
+							.reversed();
+
+
+}
+

@@ -155,15 +155,22 @@ and we should use that child class reference only.
 
 Summary table of private, default, protected & public modifiers
 
-Visibility								Private	Default	Protected		public
-Within the same class					Y		Y		Y				Y
-From the child class of same package	N		Y		Y				Y
-From non-child class of same package	N		Y		Y				Y
-From the child class of outside package	N		N		Y, We should use child reference only	Y
-From non-child class of outside package	N		N		N				Y
+Visibility								Private	Default	Protected								public
+Within the same class					Y		Y		Y											Y
+From the child class of same package	N		Y		Y											Y
+From non-child class of same package	N		Y		Y											Y
+From the child class of outside package	N		N		Y(We should use child reference only & in that particular child class only)		Y
+From non-child class of outside package	N		N		N											Y
 
 Restrictes Access Modifier: Private>default>protected>public
 
 In C , default modifier for  local variable is private.
 Recommended modifier for data member(field) is private. But recommended modifier for methods is public. 
 
+
+
+Thread Scope
+	methods inside java.lang.ThreadLocal class 
+	public void set(String data)
+	public String get()
+	public String initialValue()
